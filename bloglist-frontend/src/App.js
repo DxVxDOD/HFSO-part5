@@ -12,6 +12,11 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState(null);
 
+  const handleLogout = (e) => {
+    window.localStorage.removeItem('loggedBlogappUser');
+    window.location.reload()
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs =>  
       setBlogs( blogs )
@@ -47,6 +52,7 @@ const App = () => {
             })}
           </ul>
           <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} />
+          <button onClick={handleLogout} >Log out</button>
         </div>
       }
       <div>
