@@ -22,7 +22,7 @@ const LoginForm = ({setErrorMessage, setUser}) => {
             setUsername('');
             setPassword('');
         } catch (exception) {
-            setErrorMessage('Wrong credentials');
+            setErrorMessage(exception.response.data.error);
             setTimeout(() => {
                 setErrorMessage(null)
             }, 5000)

@@ -13,7 +13,7 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   const handleLogout = (e) => {
-    window.localStorage.removeItem('loggedBlogappUser');
+    window.localStorage.clear()
     window.location.reload()
   }
 
@@ -51,7 +51,7 @@ const App = () => {
               } else return (<>You have not posted any blogs yet !</>)
             })}
           </ul>
-          <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} />
+          <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} setErrorMessage={setErrorMessage}/>
           <button onClick={handleLogout} >Log out</button>
         </div>
       }
