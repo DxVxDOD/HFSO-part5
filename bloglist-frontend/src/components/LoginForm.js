@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 
-const LoginForm = ({setErrorMessage, setUser}) => {
+const LoginForm = ({setMessage, setMessageType, setUser}) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -22,9 +22,10 @@ const LoginForm = ({setErrorMessage, setUser}) => {
             setUsername('');
             setPassword('');
         } catch (exception) {
-            setErrorMessage(exception.response.data.error);
+            setMessageType('error')
+            setMessage(exception.response.data.error);
             setTimeout(() => {
-                setErrorMessage(null)
+                setMessage(null)
             }, 5000)
         }
     }

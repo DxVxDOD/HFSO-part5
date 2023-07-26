@@ -4,13 +4,14 @@ import blogService from './services/blogs'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogsForm from './components/BlogsForm'
-import Blogs from './services/blogs'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
   const [user, setUser] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   const handleLogout = (e) => {
     window.localStorage.clear()
@@ -35,9 +36,9 @@ const App = () => {
   return (
     <div>
       <h1>Blogs app</h1>
-      <Notification errorMessage={errorMessage} />
+      <Notification message={message} messageType={messageType} />
       {user === null ?
-        <LoginForm setErrorMessage={setErrorMessage} setUser={setUser} /> :
+        <LoginForm setMessage={setMessage} setMessageType={setMessageType}  setUser={setUser} /> :
         <div>
           <p>{user.name} is logged in</p>
           <ul>
@@ -51,7 +52,7 @@ const App = () => {
               } else return (<>You have not posted any blogs yet !</>)
             })}
           </ul>
-          <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} setErrorMessage={setErrorMessage}/>
+          <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} setMessageType={setMessageType} setMessage={setMessage}/>
           <button onClick={handleLogout} >Log out</button>
         </div>
       }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogsForm = ({setBlogs, blogs, setErrorMessage}) => {
+const BlogsForm = ({setMessage, setMessageType}) => {
 
     const [newBlog, setNewBlog] = useState({
       title: '',
@@ -10,7 +10,7 @@ const BlogsForm = ({setBlogs, blogs, setErrorMessage}) => {
       user: ''
     });
 
-    const handleNewBlog = e => {
+    const handleNewBlog = async e => {
       e.preventDefault();
 
       try {
@@ -19,15 +19,25 @@ const BlogsForm = ({setBlogs, blogs, setErrorMessage}) => {
           author: newBlog.author,
           url: newBlog.url,
         }
-        blogService.create(blogObject);
+        const result = await blogService.create(blogObject);
+        console.log(result.user);
+        setMessageType('success')
+        setMessage(`New blog: ${result.title} by ${result.author}`)
+        setTimeout(() => {
+          setMessageType(null)
+        }, 5000)
         setNewBlog({
           title: '',
           author: '',
           url: '',
         });
       } catch (exception) {
-        setErrorMessage(exception)
-      }
+        setMessageType('error');
+        setMessage(exception.response.data.error);
+        setTimeout(() => {
+            setMessageType(null)
+        }, 5000)
+    }
     }
 
   return (
@@ -51,7 +61,7 @@ const BlogsForm = ({setBlogs, blogs, setErrorMessage}) => {
         />
       </div>
       <div>
-        url:
+        Url:
         <input
         type='text'
         name='Url'
