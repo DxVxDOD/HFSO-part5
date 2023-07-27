@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogsForm = ({setMessage, setMessageType}) => {
+const BlogsForm = ({setMessage, setMessageType, blogs, setBlogs}) => {
+
+  useEffect(() => {
+  }, [])
 
   const [newBlog, setNewBlog] = useState({
       title: '',
@@ -20,9 +23,9 @@ const BlogsForm = ({setMessage, setMessageType}) => {
           url: newBlog.url,
         }
         const result = await blogService.create(blogObject);
-        console.log(result.user);
+        await blogService.getAll().then(blogs => setBlogs( blogs ))
         setMessageType('success')
-        setMessage(`New blog: ${result.title} by ${result.author}`)
+        setMessage(`New blog: ${result.title} by ${result.author}`);
         setTimeout(() => {
           setMessageType(null)
         }, 5000)

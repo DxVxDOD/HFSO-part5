@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import Notification from './components/Notification'
-import LoginForm from './components/LoginForm'
 import LoggedIn from './components/LoggedIn'
-import Togglable from './components/Togglable'
 import NotLoggedIn from './components/NotLoggedIn'
 
 
@@ -35,7 +32,7 @@ const App = () => {
       <Notification message={message} messageType={messageType} />
       {user === null ? 
         <NotLoggedIn setMessage={setMessage} setUser={setUser} setMessageType={setMessageType} blogs={blogs} /> : 
-        <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} />
+        <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} setBlogs={setBlogs} />
       }
     </div>
   )
