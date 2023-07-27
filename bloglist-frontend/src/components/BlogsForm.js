@@ -3,7 +3,7 @@ import blogService from '../services/blogs'
 
 const BlogsForm = ({setMessage, setMessageType}) => {
 
-    const [newBlog, setNewBlog] = useState({
+  const [newBlog, setNewBlog] = useState({
       title: '',
       author: '',
       url: '',

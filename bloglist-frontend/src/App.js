@@ -4,11 +4,11 @@ import blogService from './services/blogs'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogsForm from './components/BlogsForm'
+import Togglable from './components/Togglable'
 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({});
   const [message, setMessage] = useState(null);
   const [user, setUser] = useState(null);
   const [messageType, setMessageType] = useState(null);
@@ -38,7 +38,14 @@ const App = () => {
       <h1>Blogs app</h1>
       <Notification message={message} messageType={messageType} />
       {user === null ?
-        <LoginForm setMessage={setMessage} setMessageType={setMessageType}  setUser={setUser} /> :
+        <>
+        <Togglable buttonLabel='Login' >
+          <LoginForm setMessage={setMessage} setMessageType={setMessageType}  setUser={setUser} />
+        </Togglable>
+          <ul>
+            {blogs.map(blog => <li key={blog.id} ><Blog blog={blog} /></li>)}
+          </ul>
+        </> :
         <div>
           <p>{user.name} is logged in</p>
           <ul>
@@ -52,13 +59,12 @@ const App = () => {
               } else return (<>You have not posted any blogs yet !</>)
             })}
           </ul>
-          <BlogsForm newBlog={newBlog} setNewBlog={setNewBlog} setMessageType={setMessageType} setMessage={setMessage}/>
+          <Togglable buttonLabel='New blog' >
+            <BlogsForm setMessageType={setMessageType} setMessage={setMessage}/>
+          </Togglable>
           <button onClick={handleLogout} >Log out</button>
         </div>
       }
-      <div>
-        <button>show</button>
-      </div>
     </div>
   )
 }
