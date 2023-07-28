@@ -37,15 +37,17 @@ const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
     <div>
         <p>{user.name} is logged in</p>
         <ul>
-            {blogs.filter(blog => blog.user).map((blog) => {
-              if (blog.user.username === user.username) {
-                return (
-                  <li key={blog.id} >
-                    <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} />
-                  </li>
-                )
-              } else return (<>You have not posted any blogs yet !</>)
-            })}
+            {blogs.filter(blog => blog.user)
+              .sort((a, b) => b.likes - a.likes)
+              .map((blog) => {
+                if (blog.user.username === user.username) {
+                  return (
+                    <li key={blog.id} >
+                      <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} />
+                    </li>
+                  )
+                } else return (<>You have not posted any blogs yet !</>)
+              })}
         </ul>
         <Togglable buttonLabel='New blog' >
             <BlogsForm setMessageType={setMessageType} blogs={blogs} setBlogs={setBlogs} setMessage={setMessage}/>
