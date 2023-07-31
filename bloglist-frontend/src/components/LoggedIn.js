@@ -33,6 +33,27 @@ const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
 
   }
 
+  const removeblog = async (id) => {
+    const blog = blogs.find(blog => blog.id === id);
+
+    try {
+      await blogService.remove(id);
+      await blogService.getAll().then(blogs => setBlogs( blogs ))
+      setMessageType('success')
+      setMessage(`${blog.title} has been removed`);
+      setTimeout(() => {
+        setMessageType(null)
+      }, 5000)
+    }catch (exception) {
+      setMessageType('error');
+        setMessage(exception.response.data.error);
+        setTimeout(() => {
+            setMessageType(null)
+        }, 5000)
+    }
+
+  }
+
   return (
     <div>
         <p>{user.name} is logged in</p>
@@ -43,14 +64,14 @@ const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
                 if (blog.user.username === user.username) {
                   return (
                     <li key={blog.id} >
-                      <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} />
+                      <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} removeblog={() => removeblog(blog.id)} />
                     </li>
                   )
                 } else return (<>You have not posted any blogs yet !</>)
               })}
         </ul>
         <Togglable buttonLabel='New blog' >
-            <BlogsForm setMessageType={setMessageType} blogs={blogs} setBlogs={setBlogs} setMessage={setMessage}/>
+            <BlogsForm setMessageType={setMessageType} setBlogs={setBlogs} setMessage={setMessage}/>
         </Togglable>
         <button onClick={handleLogout} >Log out</button>
     </div>

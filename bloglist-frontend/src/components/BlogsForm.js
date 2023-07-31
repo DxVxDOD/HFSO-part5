@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogsForm = ({setMessage, setMessageType, blogs, setBlogs}) => {
+const BlogsForm = ({setMessage, setMessageType, setBlogs}) => {
 
   useEffect(() => {
   }, [])
