@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import BlogsForm from './BlogsForm'
 import Togglable from './Togglable'
 import Blog from './Blog'
@@ -6,10 +6,51 @@ import blogService from '../services/blogs';
 
 const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
 
+  const blogFormRef = useRef()
+
   const handleLogout = () => {
         window.localStorage.clear()
         window.location.reload()
-    }
+  }
+
+  const [newBlog, setNewBlog] = useState({
+    title: '',
+    author: '',
+    url: '',
+    user: ''
+  });
+
+  const handleNewBlog = async e => {
+    e.preventDefault();
+    blogFormRef.current.toggleVisibility()
+
+    try {
+      const blogObject = {
+        title: newBlog.title,
+        author: newBlog.author,
+        url: newBlog.url,
+      }
+      const response = await blogService.create(blogObject);
+      const result = await blogService.getAll();
+      setBlogs(result);
+      setMessageType('success')
+      setMessage(`New blog: ${response.title} by ${response.author}`);
+      setTimeout(() => {
+        setMessageType(null)
+      }, 5000)
+      setNewBlog({
+        title: '',
+        author: '',
+        url: '',
+      });
+    } catch (exception) {
+      setMessageType('error');
+      setMessage(exception.response.data.error);
+      setTimeout(() => {
+          setMessageType(null)
+      }, 5000)
+  }
+  }
 
   const updateLikes = async id => {
     const blog = blogs.find(blog => blog.id === id);
@@ -72,8 +113,8 @@ const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
                 } else return (<>You have not posted any blogs yet !</>)
               })}
         </ul>
-        <Togglable buttonLabel='New blog' >
-            <BlogsForm setMessageType={setMessageType} setBlogs={setBlogs} setMessage={setMessage}/>
+        <Togglable buttonLabel='New blog' ref={blogFormRef} >
+            <BlogsForm handleNewBlog={handleNewBlog} newBlog={newBlog} setNewBlog={setNewBlog} />
         </Togglable>
         <button onClick={handleLogout} >Log out</button>
     </div>
