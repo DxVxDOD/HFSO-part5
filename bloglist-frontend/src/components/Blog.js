@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { userContext } from "../App";
 
 const Blog = ({blog, updateLikes, removeblog}) => {
+
+  const { user } = useContext(userContext)
 
   const blogStyle = {
     paddingTop: 10,
@@ -17,12 +20,23 @@ const Blog = ({blog, updateLikes, removeblog}) => {
     <>
     {visibility ? 
       <div style={blogStyle} >
-        <p>{blog.title} {blog.author}</p>
-        <a href={blog.url}>{blog.url}</a>
-        <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
-        <p>{blog.user.name}</p>
-        <button onClick={removeblog} >reomve</button>
-        <button onClick={toggleVisibility} >hide</button>
+        {user === null ?
+        <>
+          <p>{blog.title} {blog.author}</p>
+          <a href={blog.url}>{blog.url}</a>
+          <p>{blog.likes}</p>
+          <p>{blog.user.name}</p>
+          <button onClick={toggleVisibility} >hide</button>
+        </> :
+        <>
+          <p>{blog.title} {blog.author}</p>
+          <a href={blog.url}>{blog.url}</a>
+          <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
+          <p>{blog.user.name}</p>
+          <button onClick={removeblog} >reomve</button>
+          <button onClick={toggleVisibility} >hide</button>
+        </>
+        }
       </div> : 
       <div style={blogStyle} >
         {blog.title} {blog.author}

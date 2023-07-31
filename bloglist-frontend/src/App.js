@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import blogService from './services/blogs'
 import Notification from './components/Notification'
 import LoggedIn from './components/LoggedIn'
 import NotLoggedIn from './components/NotLoggedIn'
 
+export const userContext = createContext(null);
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -25,14 +26,16 @@ const App = () => {
   },[])
 
   return (
-    <div>
-      <h1>Blogs app</h1>
-      <Notification message={message} messageType={messageType} />
-      {user === null ? 
-        <NotLoggedIn setMessage={setMessage} setUser={setUser} setMessageType={setMessageType} blogs={blogs} /> : 
-        <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} setBlogs={setBlogs} />
-      }
-    </div>
+    <userContext.Provider value={{user: user}} >
+      <div>
+        <h1>Blogs app</h1>
+        <Notification message={message} messageType={messageType} />
+        {user === null ? 
+          <NotLoggedIn setMessage={setMessage} setUser={setUser} setMessageType={setMessageType} blogs={blogs} /> : 
+          <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} setBlogs={setBlogs} />
+        }
+      </div>
+    </userContext.Provider>
   )
 }
 

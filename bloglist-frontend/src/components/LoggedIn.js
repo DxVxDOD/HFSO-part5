@@ -36,20 +36,22 @@ const LoggedIn = ({user, blogs, setBlogs, setMessageType, setMessage}) => {
   const removeblog = async (id) => {
     const blog = blogs.find(blog => blog.id === id);
 
-    try {
-      await blogService.remove(id);
-      await blogService.getAll().then(blogs => setBlogs( blogs ))
-      setMessageType('success')
-      setMessage(`${blog.title} has been removed`);
-      setTimeout(() => {
-        setMessageType(null)
-      }, 5000)
-    }catch (exception) {
-      setMessageType('error');
-        setMessage(exception.response.data.error);
+    if (window.confirm(`Would you like to remove ${blog.title} ?`)) {
+      try {
+        await blogService.remove(id);
+        await blogService.getAll().then(blogs => setBlogs( blogs ))
+        setMessageType('success')
+        setMessage(`${blog.title} has been removed`);
         setTimeout(() => {
-            setMessageType(null)
+          setMessageType(null)
         }, 5000)
+      }catch (exception) {
+        setMessageType('error');
+          setMessage(exception.response.data.error);
+          setTimeout(() => {
+              setMessageType(null)
+          }, 5000)
+      }
     }
 
   }
