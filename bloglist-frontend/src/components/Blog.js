@@ -1,7 +1,7 @@
-import { useContext, useState } from "react"
-import { userContext } from "../App";
+import { useContext, useState } from 'react'
+import { userContext } from '../App'
 
-const Blog = ({blog, updateLikes, removeblog}) => {
+const Blog = ({ blog, updateLikes, removeblog }) => {
 
   const { user } = useContext(userContext)
 
@@ -12,38 +12,38 @@ const Blog = ({blog, updateLikes, removeblog}) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
-  const [visibility, setVisibility] = useState(false);
+
+  const [visibility, setVisibility] = useState(false)
   const toggleVisibility = () => setVisibility(!visibility)
 
   return (
     <>
-    {visibility ? 
-      <div style={blogStyle} >
-        {user === null ?
-        <>
-          <p>{blog.title} {blog.author}</p>
-          <a href={blog.url}>{blog.url}</a>
-          <p>{blog.likes}</p>
-          <p>{blog.user.name}</p>
-          <button onClick={toggleVisibility} >hide</button>
-        </> :
-        <>
-          <p>{blog.title} {blog.author}</p>
-          <a href={blog.url}>{blog.url}</a>
-          <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
-          <p>{blog.user.name}</p>
-          <button onClick={removeblog} >reomve</button>
-          <button onClick={toggleVisibility} >hide</button>
-        </>
-        }
-      </div> : 
-      <div style={blogStyle} >
-        {blog.title} {blog.author}
-        <button onClick={toggleVisibility} >view</button>
-      </div>}
+      {visibility ?
+        <div style={blogStyle} >
+          {user === null ?
+            <>
+              <p>{blog.title} {blog.author}</p>
+              <a href={blog.url}>{blog.url}</a>
+              <p>{blog.likes}</p>
+              <p>{blog.user.name}</p>
+              <button onClick={toggleVisibility} >hide</button>
+            </> :
+            <>
+              <p>{blog.title} {blog.author}</p>
+              <a href={blog.url}>{blog.url}</a>
+              <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
+              <p>{blog.user.name}</p>
+              <button onClick={removeblog} >reomve</button>
+              <button onClick={toggleVisibility} >hide</button>
+            </>
+          }
+        </div> :
+        <div style={blogStyle} >
+          {blog.title} {blog.author}
+          <button onClick={toggleVisibility} >view</button>
+        </div>}
     </>
-)
+  )
 }
 
 export default Blog

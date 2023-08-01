@@ -1,56 +1,56 @@
-import React, { useState } from 'react';
-import loginService from '../services/login';
-import blogService from '../services/blogs';
+import React, { useState } from 'react'
+import loginService from '../services/login'
+import blogService from '../services/blogs'
 
-const LoginForm = ({setMessage, setMessageType, setUser}) => {
+const LoginForm = ({ setMessage, setMessageType, setUser }) => {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault()
 
-        try {
-            const user = await loginService.login({
-                username: username,
-                passwordHash: password,
-            })
+    try {
+      const user = await loginService.login({
+        username: username,
+        passwordHash: password,
+      })
 
-            window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-            blogService.setToken(user.token);
-            setUser(user);
-            setUsername('');
-            setPassword('');
-        } catch (exception) {
-            setMessageType('error')
-            setMessage(exception.response.data.error);
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
-        }
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setMessageType('error')
+      setMessage(exception.response.data.error)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
+  }
 
   return (
     <form onSubmit={handleLogin} >
-        <div>
+      <div>
             Username
-            <input
-            type='text'
-            value={username}
-            name='Username'
-            onChange={({target}) => setUsername(target.value)}
-            />
-        </div>
-        <div>
+        <input
+          type='text'
+          value={username}
+          name='Username'
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
             Password
-            <input
-            type='password'
-            value={password}
-            name='Password'
-            onChange={({target}) => setPassword(target.value)}
-            />
-        </div>
-        <button type='submit' >Login</button>
+        <input
+          type='password'
+          value={password}
+          name='Password'
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type='submit' >Login</button>
     </form>
   )
 }
