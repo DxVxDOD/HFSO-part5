@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 import axios from 'axios'
 const baseUrl = '/api/blog'
 

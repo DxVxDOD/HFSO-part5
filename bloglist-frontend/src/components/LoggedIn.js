@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import BlogsForm from './BlogsForm'
-import Togglable from './Togglable'
-import Blog from './Blog'
-import blogService from '../services/blogs'
+import BlogsForm from './BlogsForm.js'
+import Togglable from './Togglable.js'
+import Blog from './Blog.js'
+import blogService from '../services/blogs.js'
 
 const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }) => {
 

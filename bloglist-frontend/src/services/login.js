@@ -1,4 +1,5 @@
-import axios from 'axios'
+// eslint-disable-next-line no-undef
+const axios = require('axios')
 const baseUrl = '/api/login'
 
 const login = async credentials => {

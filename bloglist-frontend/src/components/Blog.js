@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { userContext } from '../App'
+import { userContext } from '../App.js'
 
 const Blog = ({ blog, updateLikes, removeblog }) => {
 
@@ -17,7 +17,7 @@ const Blog = ({ blog, updateLikes, removeblog }) => {
   const toggleVisibility = () => setVisibility(!visibility)
 
   return (
-    <>
+    <div className='blog' >
       {visibility ?
         <div style={blogStyle} >
           {user === null ?
@@ -42,7 +42,7 @@ const Blog = ({ blog, updateLikes, removeblog }) => {
           {blog.title} {blog.author}
           <button onClick={toggleVisibility} >view</button>
         </div>}
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import loginService from '../services/login'
-import blogService from '../services/blogs'
+import loginService from '../services/login.js'
+import blogService from '../services/blogs.js'
 
 const LoginForm = ({ setMessage, setMessageType, setUser }) => {
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext } from 'react'
-import blogService from './services/blogs'
-import Notification from './components/Notification'
-import LoggedIn from './components/LoggedIn'
-import NotLoggedIn from './components/NotLoggedIn'
+import blogService from './services/blogs.js'
+import Notification from './components/Notification.js'
+import LoggedIn from './components/LoggedIn.js'
+import NotLoggedIn from './components/NotLoggedIn.js'
 
 export const userContext = createContext(null)
 
