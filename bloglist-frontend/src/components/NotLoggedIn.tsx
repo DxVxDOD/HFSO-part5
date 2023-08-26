@@ -1,7 +1,6 @@
-import React from 'react'
 import Togglable from './Togglable.js'
 import LoginForm from './LoginForm.js'
-import Blog from './Blog.js'
+import Blog from './Blogs.js'
 
 const NotLoggedIn = ({ setMessage, setMessageType, setUser, blogs }) => {
 

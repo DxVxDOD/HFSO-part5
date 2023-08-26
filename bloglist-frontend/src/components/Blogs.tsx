@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react'
 import { userContext } from '../App.js'
+import { BlogT } from '../types/blog.js'
 
-const Blog = ({ blog, updateLikes, removeblog }) => {
+const Blog = ({ blog, updateLikes, removeblog }: {blog: BlogT}) => {
 
   const { user } = useContext(userContext)
 
@@ -20,7 +21,7 @@ const Blog = ({ blog, updateLikes, removeblog }) => {
     <div className='blog' >
       {visibility ?
         <div style={blogStyle} >
-          {user === 1 ?
+          {user === null ?
             <>
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
