@@ -4,12 +4,12 @@ import Notification from './components/Notification.js'
 import LoggedIn from './components/LoggedIn.js'
 import NotLoggedIn from './components/NotLoggedIn.js'
 
-export const userContext = createContext(null)
+export const userContext = createContext(1)
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(1)
   const [messageType, setMessageType] = useState(null)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const App = () => {
       <div>
         <h1>Blogs app</h1>
         <Notification message={message} messageType={messageType} />
-        {user === null ?
+        {user === 1 ?
           <NotLoggedIn setMessage={setMessage} setUser={setUser} setMessageType={setMessageType} blogs={blogs} /> :
           <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} setBlogs={setBlogs} />
         }

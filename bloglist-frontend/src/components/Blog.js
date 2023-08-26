@@ -20,7 +20,7 @@ const Blog = ({ blog, updateLikes, removeblog }) => {
     <div className='blog' >
       {visibility ?
         <div style={blogStyle} >
-          {user === null ?
+          {user === 1 ?
             <>
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
