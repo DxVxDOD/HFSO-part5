@@ -1,4 +1,4 @@
-const Notification = ({ message, messageType }: {message: string, messageType: null | string}) => {
+const Notification = ({ message, messageType }: {message: string | null, messageType: null | string}) => {
   if(messageType === null) {
     return null
   } else if (messageType === 'success') {

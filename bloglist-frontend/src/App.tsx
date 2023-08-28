@@ -9,9 +9,9 @@ export const userContext = createContext(null)
 
 const App = () => {
   const [blogs, setBlogs] = useState<Array<BlogT>>([])
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState<string | null>(null)
   const [user, setUser] = useState(null)
-  const [messageType, setMessageType] = useState(null)
+  const [messageType, setMessageType] = useState<string | null>(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs => setBlogs( blogs ))
@@ -27,7 +27,7 @@ const App = () => {
   },[])
 
   return (
-    <userContext.Provider value={{ user: user }} >
+    <userContext.Provider value={user} >
       <div>
         <h1>Blogs app</h1>
         <Notification message={message} messageType={messageType} />

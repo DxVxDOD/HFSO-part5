@@ -1,37 +1,34 @@
-import React, { useRef, useState } from 'react'
+import React, { FormEvent, useRef, useState } from 'react'
 import BlogsForm from './BlogsForm.js'
-import Togglable from './Togglable.js'
+import Togglable, { VisibilityHandle } from './Togglable.js'
 import Blog from './Blogs.js'
 import blogService from '../services/blog.js'
 import { BlogT } from '../types/blog.js'
 import { AxiosError } from 'axios'
+import { User } from '../types/user.js'
 
 const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }: 
     {
-        user: string,
+        user: User,
         blogs: BlogT[],
         setBlogs: React.Dispatch<React.SetStateAction<BlogT[]>>,
-        setMessageType: React.Dispatch<React.SetStateAction<null | string>>,
-        setMessage: React.Dispatch<React.SetStateAction<null | string>>
+        setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
+        setMessage: React.Dispatch<React.SetStateAction<string | null>>
     }) => {
 
-  const blogFormRef = useRef()
+  const blogFormRef = useRef<VisibilityHandle>()
 
   const handleLogout = () => {
     window.localStorage.clear()
     window.location.reload()
   }
 
-  const [newBlog, setNewBlog] = useState<BlogT>({
-    title: '',
-    author: '',
-    url: '',
-    user: ''
-  })
+  const [newBlog, setNewBlog] = useState({} as BlogT)
 
-  const handleNewBlog = async e => {
+  const handleNewBlog = async (e: FormEvent) => {
     e.preventDefault()
-    blogFormRef.current.toggleVisibility()
+    if (blogFormRef.current) {
+      blogFormRef.current.toggleVisibility()
 
     try {
       const blogObject = {
@@ -45,7 +42,7 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
       setMessageType('success')
       setMessage(`New blog: ${response.title} by ${response.author}`)
       setTimeout(() => {
-        setMessageType(null)
+        setMessageType('')
       }, 5000)
       setNewBlog({
         title: '',
@@ -53,20 +50,21 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
         url: '',
       })
     } catch (exception: unknown) {
-        if(exception instanceof AxiosError && exception.response !== undefined) {
+        if(exception instanceof AxiosError && exception.response) {
             setMessageType('error')
             setMessage(exception.response.data.error)
             setTimeout(() => {
-              setMessageType(null)
+              setMessageType('')
             }, 5000)
         }
+    }
     }
   }
 
   const updateLikes = async (id: number) => {
     const blog = blogs.find((blog: BlogT) => blog.id === id)
-    if (blog !== undefined) {
-    const chnagedBlog = { ...blog, likes: blog.likes?? + 1 }
+    if (blog) {
+    const chnagedBlog = { ...blog, likes: blog.likes! + 1 }
 
     try {
       const returnedNote = await blogService.update(id, chnagedBlog)
@@ -74,38 +72,38 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
       setMessageType('success')
       setMessage(`${returnedNote.title} has been updated`)
       setTimeout(() => {
-        setMessageType(null)
+        setMessageType('')
       }, 5000)
     }catch (exception: unknown) {
-        if(exception instanceof AxiosError && exception.response !== undefined) {
+        if(exception instanceof AxiosError && exception.response) {
             setMessageType('error')
             setMessage(exception.response.data.error)
             setTimeout(() => {
-              setMessageType(null)
+              setMessageType('')
             }, 5000)
         }
     }
     }
   }
 
-  const removeblog = async (id: number) => {
+  const removeBlog = async (id: number) => {
     const blog = blogs.find((blog: BlogT) => blog.id === id)
 
-    if (blog !== undefined && (window.confirm(`Would you like to remove ${blog.title} ?`))) {
+    if (blog && (window.confirm(`Would you like to remove ${blog.title} ?`))) {
       try {
         await blogService.remove(id)
         await blogService.getAll().then(blogs => setBlogs( blogs ))
         setMessageType('success')
         setMessage(`${blog.title} has been removed`)
         setTimeout(() => {
-          setMessageType(null)
+          setMessageType('')
         }, 5000)
       }catch (exception: unknown) {
-        if(exception instanceof AxiosError && exception.response !== undefined) {
+        if(exception instanceof AxiosError && exception.response) {
             setMessageType('error')
             setMessage(exception.response.data.error)
             setTimeout(() => {
-              setMessageType(null)
+              setMessageType('')
             }, 5000)
         }
     }
@@ -117,12 +115,12 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
       <p>{user.name} is logged in</p>
       <ul>
         {blogs.filter((blog: BlogT) => blog.user)
-          .sort((a: BlogT, b: BlogT) => b.likes?? - a.likes)
+          .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
           .map((blog: BlogT) => {
-            if (blog.user.username === user.username) {
+            if (blog.user!.username === user.username) {
               return (
                 <li key={blog.id} >
-                  <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} removeblog={() => removeblog(blog.id)} />
+                  <Blog blog={blog} updateLikes={() => updateLikes(blog.id!)} removeBlog={() => removeBlog(blog.id!)} />
                 </li>
               )
             } else return (<>You have not posted any blogs yet !</>)

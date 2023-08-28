@@ -1,124 +1,66 @@
-import React, { useRef, useState } from 'react'
-import BlogsForm from './BlogsForm.js'
-import Togglable from './Togglable.js'
-import Blog from './Blog.js'
-import blogService from '../services/blogs.js'
+import React, { FormEvent, useState } from 'react'
+import loginService from '../services/login'
+import blogService from '../services/blog'
+import { AxiosError } from 'axios'
 
-const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }) => {
+const LoginForm = ({ setMessage, setMessageType, setUser }: 
+  {
+    setMessage: React.Dispatch<React.SetStateAction<string | null>>,
+    setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
+    setUser: React.Dispatch<React.SetStateAction<null>>
+  }) => {
 
-  const blogFormRef = useRef()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleLogout = () => {
-    window.localStorage.clear()
-    window.location.reload()
-  }
-
-  const [newBlog, setNewBlog] = useState({
-    title: '',
-    author: '',
-    url: '',
-    user: ''
-  })
-
-  const handleNewBlog = async e => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
-    blogFormRef.current.toggleVisibility()
 
     try {
-      const blogObject = {
-        title: newBlog.title,
-        author: newBlog.author,
-        url: newBlog.url,
-      }
-      const response = await blogService.create(blogObject)
-      const result = await blogService.getAll()
-      setBlogs(result)
-      setMessageType('success')
-      setMessage(`New blog: ${response.title} by ${response.author}`)
-      setTimeout(() => {
-        setMessageType(null)
-      }, 5000)
-      setNewBlog({
-        title: '',
-        author: '',
-        url: '',
+      const user = await loginService.login({
+        username: username,
+        password: password,
       })
-    } catch (exception) {
-      setMessageType('error')
-      setMessage(exception.response.data.error)
-      setTimeout(() => {
-        setMessageType(null)
-      }, 5000)
-    }
-  }
 
-  const updateLikes = async id => {
-    const blog = blogs.find(blog => blog.id === id)
-    const chnagedBlog = { ...blog, likes: blog.likes + 1 }
-
-    try {
-      const returnedNote = await blogService.update(id, chnagedBlog)
-      await blogService.getAll().then(blogs => setBlogs( blogs ))
-      setMessageType('success')
-      setMessage(`${returnedNote.title} has been updated`)
-      setTimeout(() => {
-        setMessageType(null)
-      }, 5000)
-    }catch (exception) {
-      setMessageType('error')
-      setMessage(exception.response.data.error)
-      setTimeout(() => {
-        setMessageType(null)
-      }, 5000)
-    }
-
-  }
-
-  const removeblog = async (id) => {
-    const blog = blogs.find(blog => blog.id === id)
-
-    if (window.confirm(`Would you like to remove ${blog.title} ?`)) {
-      try {
-        await blogService.remove(id)
-        await blogService.getAll().then(blogs => setBlogs( blogs ))
-        setMessageType('success')
-        setMessage(`${blog.title} has been removed`)
-        setTimeout(() => {
-          setMessageType(null)
-        }, 5000)
-      }catch (exception) {
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception: unknown) {
+      if (exception instanceof AxiosError && exception.response) {
         setMessageType('error')
         setMessage(exception.response.data.error)
         setTimeout(() => {
-          setMessageType(null)
+          setMessage(null)
         }, 5000)
       }
     }
-
   }
 
   return (
-    <div>
-      <p>{user.name} is logged in</p>
-      <ul>
-        {blogs.filter(blog => blog.user)
-          .sort((a, b) => b.likes - a.likes)
-          .map((blog) => {
-            if (blog.user.username === user.username) {
-              return (
-                <li key={blog.id} >
-                  <Blog blog={blog} updateLikes={() => updateLikes(blog.id)} removeblog={() => removeblog(blog.id)} />
-                </li>
-              )
-            } else return (<>You have not posted any blogs yet !</>)
-          })}
-      </ul>
-      <Togglable buttonLabel='New blog' ref={blogFormRef} >
-        <BlogsForm handleNewBlog={handleNewBlog} newBlog={newBlog} setNewBlog={setNewBlog} />
-      </Togglable>
-      <button onClick={handleLogout} >Log out</button>
-    </div>
+    <form onSubmit={handleLogin} >
+      <div>
+            Username
+        <input
+          type='text'
+          value={username}
+          name='Username'
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+            Password
+        <input
+          type='password'
+          value={password}
+          name='Password'
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type='submit' >Login</button>
+    </form>
   )
 }
 
-export default LoggedIn
+export default LoginForm

@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 type Blog = {
@@ -6,7 +8,7 @@ type Blog = {
 	url: string;
 	likes: number;
 	id: number;
-	user: string
+	user: User
 };
 
 type BlogT = Optional<Blog, 'likes' | 'id' | 'user'>

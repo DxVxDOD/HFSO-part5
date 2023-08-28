@@ -2,9 +2,14 @@ import { useContext, useState } from 'react'
 import { userContext } from '../App.js'
 import { BlogT } from '../types/blog.js'
 
-const Blog = ({ blog, updateLikes, removeblog }: {blog: BlogT}) => {
+const Blog = ({ blog, updateLikes, removeBlog }: 
+  {
+    blog: BlogT,
+    updateLikes?: () => Promise<void>,
+    removeBlog?: () => Promise<void>
+  }) => {
 
-  const { user } = useContext(userContext)
+  const user = useContext(userContext)
 
   const blogStyle = {
     paddingTop: 10,
@@ -26,15 +31,15 @@ const Blog = ({ blog, updateLikes, removeblog }: {blog: BlogT}) => {
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
               <p>{blog.likes}</p>
-              <p>{blog.user.name}</p>
+              <p>{blog.user!.name}</p>
               <button onClick={toggleVisibility} >hide</button>
             </> :
             <>
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
               <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
-              <p>{blog.user.name}</p>
-              <button onClick={removeblog} >reomve</button>
+              <p>{blog.user!.name}</p>
+              <button onClick={removeBlog} >reomve</button>
               <button onClick={toggleVisibility} >hide</button>
             </>
           }
