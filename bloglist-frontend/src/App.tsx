@@ -1,16 +1,17 @@
-import React, { useState, useEffect, createContext } from 'react'
-import blogService from './services/blogs.js'
-import Notification from './components/Notification.js'
-import LoggedIn from './components/LoggedIn.js'
-import NotLoggedIn from './components/NotLoggedIn.js'
+import { useState, useEffect, createContext } from 'react'
+import blogService from './services/blog.ts'
+import Notification from './components/Notifications.tsx'
+import LoggedIn from './components/LoggedIn.tsx'
+import NotLoggedIn from './components/NotLoggedIn.tsx'
+import { BlogT } from './types/blog.ts'
 
-export const userContext = createContext(1)
+export const userContext = createContext(null)
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [message, setMessage] = useState(null)
-  const [user, setUser] = useState(1)
-  const [messageType, setMessageType] = useState(null)
+  const [blogs, setBlogs] = useState<Array<BlogT>>([])
+  const [message, setMessage] = useState<string | null>(null)
+  const [user, setUser] = useState(null)
+  const [messageType, setMessageType] = useState<string | null>(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs => setBlogs( blogs ))
@@ -26,11 +27,11 @@ const App = () => {
   },[])
 
   return (
-    <userContext.Provider value={{ user: user }} >
+    <userContext.Provider value={user} >
       <div>
         <h1>Blogs app</h1>
         <Notification message={message} messageType={messageType} />
-        {user === 1 ?
+        {user === null ?
           <NotLoggedIn setMessage={setMessage} setUser={setUser} setMessageType={setMessageType} blogs={blogs} /> :
           <LoggedIn user={user} blogs={blogs} setMessage={setMessage} setMessageType={setMessageType} setBlogs={setBlogs} />
         }

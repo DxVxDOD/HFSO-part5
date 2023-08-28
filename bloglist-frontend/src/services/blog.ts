@@ -1,10 +1,10 @@
-// eslint-disable-next-line no-undef
 import axios from 'axios'
 const baseUrl = '/api/blog'
+import { BlogT } from '../types/blog'
 
-let token = null
+let token: string
 
-const setToken = newToken => token = `Bearer ${newToken}`
+const setToken = (newToken: number) => token = `Bearer ${newToken}`
 
 const getAll = async () => {
   const request = axios.get(baseUrl)
@@ -12,7 +12,7 @@ const getAll = async () => {
   return response.data
 }
 
-const create = async newBlog => {
+const create = async (newBlog: BlogT) => {
   const config = {
     headers: { Authorization: token }
   }
@@ -21,7 +21,7 @@ const create = async newBlog => {
   return response.data
 }
 
-const update = async (id, updatedBlog) => {
+const update = async (id: string, updatedBlog: BlogT) => {
   const config = {
     headers: { Authorization: token }
   }
@@ -29,7 +29,7 @@ const update = async (id, updatedBlog) => {
   return response.data
 }
 
-const remove = async (id) => {
+const remove = async (id: string) => {
   const config = {
     headers: { Authorization: token }
   }

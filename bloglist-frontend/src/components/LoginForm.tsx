@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
-import loginService from '../services/login.js'
-import blogService from '../services/blogs.js'
+import React, { FormEvent, useState } from 'react'
+import loginService from '../services/login.ts'
+import blogService from '../services/blog.ts'
+import { AxiosError } from 'axios'
 
-const LoginForm = ({ setMessage, setMessageType, setUser }) => {
+const LoginForm = ({ setMessage, setMessageType, setUser }: 
+  {
+    setMessage: React.Dispatch<React.SetStateAction<string | null>>,
+    setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
+    setUser: React.Dispatch<React.SetStateAction<null>>
+  }) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
 
     try {
       const user = await loginService.login({
         username: username,
-        passwordHash: password,
+        password: password,
       })
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
@@ -21,12 +27,14 @@ const LoginForm = ({ setMessage, setMessageType, setUser }) => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      setMessageType('error')
-      setMessage(exception.response.data.error)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+    } catch (exception: unknown) {
+      if (exception instanceof AxiosError && exception.response) {
+        setMessageType('error')
+        setMessage(exception.response.data.error)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      }
     }
   }
 

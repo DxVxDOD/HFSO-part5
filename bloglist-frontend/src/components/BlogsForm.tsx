@@ -1,7 +1,13 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import { FormEvent } from 'react'
+import { BlogT } from '../types/blog.ts'
 
-const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }) => {
+const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }: 
+  {
+    handleNewBlog: (e: FormEvent) => Promise<void>,
+    newBlog: BlogT,
+    setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>
+  }) => {
 
   return (
     <form onSubmit={handleNewBlog} >
