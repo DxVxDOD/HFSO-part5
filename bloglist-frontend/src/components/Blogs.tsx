@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
-import { userContext } from '../App.js'
-import { BlogT } from '../types/blog.js'
+import { userContext } from '../App.tsx'
+import { BlogT } from '../types/blog.ts'
 
 const Blog = ({ blog, updateLikes, removeBlog }: 
   {

@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react'
-import loginService from '../services/login'
-import blogService from '../services/blog'
+import loginService from '../services/login.ts'
+import blogService from '../services/blog.ts'
 import { AxiosError } from 'axios'
 
 const LoginForm = ({ setMessage, setMessageType, setUser }: 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { FormEvent } from 'react'
-import { BlogT } from '../types/blog'
+import { BlogT } from '../types/blog.ts'
 
 const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }: 
   {

@@ -1,11 +1,11 @@
 import React, { FormEvent, useRef, useState } from 'react'
-import BlogsForm from './BlogsForm.js'
-import Togglable, { VisibilityHandle } from './Togglable.js'
-import Blog from './Blogs.js'
-import blogService from '../services/blog.js'
-import { BlogT } from '../types/blog.js'
+import BlogsForm from './BlogsForm.tsx'
+import Togglable, { VisibilityHandle } from './Togglable.tsx'
+import Blog from './Blogs.tsx'
+import blogService from '../services/blog.ts'
+import { BlogT } from '../types/blog.ts'
 import { AxiosError } from 'axios'
-import { User } from '../types/user.js'
+import { User } from '../types/user.ts'
 
 const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }: 
     {
@@ -61,7 +61,7 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
     }
   }
 
-  const updateLikes = async (id: number) => {
+  const updateLikes = async (id: string) => {
     const blog = blogs.find((blog: BlogT) => blog.id === id)
     if (blog) {
     const chnagedBlog = { ...blog, likes: blog.likes! + 1 }
@@ -86,7 +86,7 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
     }
   }
 
-  const removeBlog = async (id: number) => {
+  const removeBlog = async (id: string) => {
     const blog = blogs.find((blog: BlogT) => blog.id === id)
 
     if (blog && (window.confirm(`Would you like to remove ${blog.title} ?`))) {

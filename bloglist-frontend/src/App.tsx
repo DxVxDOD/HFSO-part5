@@ -1,9 +1,9 @@
 import { useState, useEffect, createContext } from 'react'
-import blogService from './services/blog.js'
-import Notification from './components/Notifications.js'
-import LoggedIn from './components/LoggedIn.js'
-import NotLoggedIn from './components/NotLoggedIn.js'
-import { BlogT } from './types/blog.js'
+import blogService from './services/blog.ts'
+import Notification from './components/Notifications.tsx'
+import LoggedIn from './components/LoggedIn.tsx'
+import NotLoggedIn from './components/NotLoggedIn.tsx'
+import { BlogT } from './types/blog.ts'
 
 export const userContext = createContext(null)
 

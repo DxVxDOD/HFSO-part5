@@ -21,7 +21,7 @@ const create = async (newBlog: BlogT) => {
   return response.data
 }
 
-const update = async (id: number, updatedBlog: BlogT) => {
+const update = async (id: string, updatedBlog: BlogT) => {
   const config = {
     headers: { Authorization: token }
   }
@@ -29,7 +29,7 @@ const update = async (id: number, updatedBlog: BlogT) => {
   return response.data
 }
 
-const remove = async (id: number) => {
+const remove = async (id: string) => {
   const config = {
     headers: { Authorization: token }
   }

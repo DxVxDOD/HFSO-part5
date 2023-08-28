@@ -7,7 +7,7 @@ type Blog = {
 	author: string;
 	url: string;
 	likes: number;
-	id: number;
+	id: string;
 	user: User
 };
 
