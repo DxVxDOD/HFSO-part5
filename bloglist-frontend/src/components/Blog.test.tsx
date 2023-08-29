@@ -18,10 +18,10 @@ describe('Blog tests', () => {
   };
 
   let container: HTMLElement
-  let mockHandler: jest.Mock
+  const mockHandler: jest.Mock = jest.fn();
 
   beforeEach(() => {
-    container = render(<Blog blog={blog} veiw={mockHandler} />).container;
+    container = render(<Blog blog={blog} updateLikes={mockHandler} />).container;
   })
 
   test('renders content', async () => {
@@ -35,8 +35,6 @@ describe('Blog tests', () => {
 
   test('url and likes shown after button click', async () => {
     const div = container.querySelector('.blog')
-
-    mockHandler = jest.fn();
     const user = userEvent.setup();
 
     let buttonText: string
@@ -51,6 +49,24 @@ describe('Blog tests', () => {
 
     expect(div).toHaveTextContent('17')
     expect(div).toHaveTextContent('https://reactpatterns.com/')
+  })
+
+  test('event handler respondes to button click', async () => {
+    const user = userEvent.setup();
+
+    let buttonText: string
+    if (screen.getByText('view')) {
+      buttonText = 'view'
+    } else buttonText = 'hide'
+
+    const buttonView = screen.getByText(`${buttonText}`);
+    await user.click(buttonView)
+
+    const buttonLike = screen.getByText('like');
+    await user.click(buttonLike)
+    await user.click(buttonLike)
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 });
   

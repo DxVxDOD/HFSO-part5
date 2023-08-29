@@ -3,12 +3,11 @@ import { userContext } from '../App.tsx'
 import { BlogT } from '../types/blog.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Blog = ({ blog, updateLikes, removeBlog, veiw }: 
+const Blog = ({ blog, updateLikes, removeBlog }: 
   {
     blog: BlogT,
     updateLikes?: () => Promise<void>,
     removeBlog?: () => Promise<void>,
-    veiw?: jest.Mock
   }) => {
 
   const user = useContext(userContext)
@@ -33,6 +32,7 @@ const Blog = ({ blog, updateLikes, removeBlog, veiw }:
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
               <p>{blog.likes}</p>
+              <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
               <p>{blog.user!.name}</p>
               <button onClick={toggleVisibility} >hide</button>
             </> :
@@ -49,7 +49,6 @@ const Blog = ({ blog, updateLikes, removeBlog, veiw }:
         <div style={blogStyle} >
           {blog.title} {blog.author}
           <button onClick={toggleVisibility} >view</button>
-          {`${veiw}`}
         </div>}
     </div>
   )
