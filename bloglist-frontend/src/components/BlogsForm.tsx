@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react'
 import { BlogT } from '../types/blog.ts'
 
-const BlogsForm = ({ handleNewBlog }: { handleNewBlog: (e: FormEvent, newBlog: BlogT, setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>) => Promise<void> }) => {
+const BlogsForm = ({ handleNewBlog }: 
+  { handleNewBlog: (e: FormEvent, newBlog: BlogT, setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>) => Promise<void> }) => {
 
   const [newBlog, setNewBlog] = useState<BlogT>({
     author: '',
@@ -17,6 +18,7 @@ const BlogsForm = ({ handleNewBlog }: { handleNewBlog: (e: FormEvent, newBlog: B
           type='text'
           name='Author'
           placeholder='Author'
+          id='author'
           value={newBlog.author}
           onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}
         />
@@ -27,6 +29,7 @@ const BlogsForm = ({ handleNewBlog }: { handleNewBlog: (e: FormEvent, newBlog: B
           type='text'
           name='Title'
           placeholder='Title'
+          id='title'
           value={newBlog.title}
           onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}
         />
@@ -37,6 +40,7 @@ const BlogsForm = ({ handleNewBlog }: { handleNewBlog: (e: FormEvent, newBlog: B
           type='text'
           name='Url'
           placeholder='Url'
+          id='url'
           value={newBlog.url}
           onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}
         />

@@ -4,7 +4,7 @@ import { BlogT } from '../types/blog'
 
 let token: string
 
-const setToken = (newToken: number) => token = `Bearer ${newToken}`
+const setToken = (newToken: string) => token = `Bearer ${newToken}`
 
 const getAll = async () => {
   const request = axios.get(baseUrl)
