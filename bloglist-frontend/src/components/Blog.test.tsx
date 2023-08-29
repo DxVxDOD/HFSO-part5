@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom'
 import Blog from './Blogs.tsx';
 
@@ -17,22 +17,40 @@ describe('Blog tests', () => {
     id: "64b5a7eea29f66d8f8d5f3ca"
   };
 
+  let container: HTMLElement
+  let mockHandler: jest.Mock
+
+  beforeEach(() => {
+    container = render(<Blog blog={blog} veiw={mockHandler} />).container;
+  })
+
   test('renders content', async () => {
-
-    const mockHandler = jest.fn();
-
-    const {container} = render(<Blog blog={blog} veiw={mockHandler} />);
-
-    // const user = userEvent.setup();
-    // const button = screen.getByText('view');
-    // await user.click(button)
-
-    // const div = container.querySelector('.blog')
+    const div = container.querySelector('.blog')
 
     screen.debug(container);
 
-    expect(container).toHaveTextContent('MIDDELWARE USER EXTRACTION 1001');
-    expect(container).toHaveTextContent('Michael Chan');
+    expect(div).toHaveTextContent('MIDDELWARE USER EXTRACTION 1001');
+    expect(div).toHaveTextContent('Michael Chan');
   });
+
+  test('url and likes shown after button click', async () => {
+    const div = container.querySelector('.blog')
+
+    mockHandler = jest.fn();
+    const user = userEvent.setup();
+
+    let buttonText: string
+    if (screen.getByText('view')) {
+      buttonText = 'view'
+    } else buttonText = 'hide'
+
+    const button = screen.getByText(`${buttonText}`);
+    await user.click(button)
+
+    screen.debug(container);
+
+    expect(div).toHaveTextContent('17')
+    expect(div).toHaveTextContent('https://reactpatterns.com/')
+  })
 });
   
