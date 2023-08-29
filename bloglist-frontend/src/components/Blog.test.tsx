@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom'
 import Blog from './Blogs.tsx';
 
@@ -23,15 +23,16 @@ describe('Blog tests', () => {
 
     const {container} = render(<Blog blog={blog} veiw={mockHandler} />);
 
-    const user = userEvent.setup();
-    const button = screen.getByText('view');
-    await user.click(button)
+    // const user = userEvent.setup();
+    // const button = screen.getByText('view');
+    // await user.click(button)
 
     // const div = container.querySelector('.blog')
 
-    // screen.debug(container);
+    screen.debug(container);
 
     expect(container).toHaveTextContent('MIDDELWARE USER EXTRACTION 1001');
+    expect(container).toHaveTextContent('Michael Chan');
   });
 });
   
