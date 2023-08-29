@@ -6,7 +6,7 @@ const Blog = ({ blog, updateLikes, removeBlog }:
   {
     blog: BlogT,
     updateLikes?: () => Promise<void>,
-    removeBlog?: () => Promise<void>
+    removeBlog?: () => Promise<void>,
   }) => {
 
   const user = useContext(userContext)
@@ -31,6 +31,7 @@ const Blog = ({ blog, updateLikes, removeBlog }:
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
               <p>{blog.likes}</p>
+              <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
               <p>{blog.user!.name}</p>
               <button onClick={toggleVisibility} >hide</button>
             </> :

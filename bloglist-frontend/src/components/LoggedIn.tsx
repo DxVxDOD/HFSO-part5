@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { FormEvent, useRef, } from 'react'
 import BlogsForm from './BlogsForm.tsx'
 import Togglable, { VisibilityHandle } from './Togglable.tsx'
 import Blog from './Blogs.tsx'
@@ -8,12 +8,12 @@ import { AxiosError } from 'axios'
 import { User } from '../types/user.ts'
 
 const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }: 
-    {
-        user: User,
-        blogs: BlogT[],
-        setBlogs: React.Dispatch<React.SetStateAction<BlogT[]>>,
-        setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
-        setMessage: React.Dispatch<React.SetStateAction<string | null>>
+    {   
+      user: User,
+      blogs: BlogT[],
+      setBlogs: React.Dispatch<React.SetStateAction<BlogT[]>>,
+      setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
+      setMessage: React.Dispatch<React.SetStateAction<string | null>>
     }) => {
 
   const blogFormRef = useRef<VisibilityHandle>()
@@ -23,9 +23,7 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
     window.location.reload()
   }
 
-  const [newBlog, setNewBlog] = useState({} as BlogT)
-
-  const handleNewBlog = async (e: FormEvent) => {
+  const handleNewBlog = async (e: FormEvent, newBlog: BlogT, setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>) => {
     e.preventDefault()
     if (blogFormRef.current) {
       blogFormRef.current.toggleVisibility()
@@ -127,7 +125,7 @@ const LoggedIn = ({ user, blogs, setBlogs, setMessageType, setMessage }:
           })}
       </ul>
       <Togglable buttonLabel='New blog' ref={blogFormRef} >
-        <BlogsForm handleNewBlog={handleNewBlog} newBlog={newBlog} setNewBlog={setNewBlog} />
+        <BlogsForm handleNewBlog={handleNewBlog} />
       </Togglable>
       <button onClick={handleLogout} >Log out</button>
     </div>

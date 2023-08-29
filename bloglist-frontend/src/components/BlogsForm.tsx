@@ -1,21 +1,22 @@
-import PropTypes from 'prop-types'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { BlogT } from '../types/blog.ts'
 
-const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }: 
-  {
-    handleNewBlog: (e: FormEvent) => Promise<void>,
-    newBlog: BlogT,
-    setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>
-  }) => {
+const BlogsForm = ({ handleNewBlog }: { handleNewBlog: (e: FormEvent, newBlog: BlogT, setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>) => Promise<void> }) => {
+
+  const [newBlog, setNewBlog] = useState<BlogT>({
+    author: '',
+    title: '',
+    url: ''
+  })
 
   return (
-    <form onSubmit={handleNewBlog} >
+    <form onSubmit={(e) => handleNewBlog(e, newBlog, setNewBlog)} >
       <div>
         Author
         <input
           type='text'
           name='Author'
+          placeholder='Author'
           value={newBlog.author}
           onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}
         />
@@ -25,6 +26,7 @@ const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }:
         <input
           type='text'
           name='Title'
+          placeholder='Title'
           value={newBlog.title}
           onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}
         />
@@ -34,6 +36,7 @@ const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }:
         <input
           type='text'
           name='Url'
+          placeholder='Url'
           value={newBlog.url}
           onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}
         />
@@ -44,9 +47,3 @@ const BlogsForm = ({ handleNewBlog, newBlog, setNewBlog }:
 }
 
 export default BlogsForm
-
-BlogsForm.propType ={
-  handleNewBlog: PropTypes.func.isRequired,
-  newBlog: PropTypes.object.isRequired,
-  setNewBlog: PropTypes.func.isRequired
-}
