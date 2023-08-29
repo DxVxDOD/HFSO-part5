@@ -27,8 +27,6 @@ describe('Blog tests', () => {
   test('renders content', async () => {
     const div = container.querySelector('.blog')
 
-    screen.debug(container);
-
     expect(div).toHaveTextContent('MIDDELWARE USER EXTRACTION 1001');
     expect(div).toHaveTextContent('Michael Chan');
   });
@@ -44,8 +42,6 @@ describe('Blog tests', () => {
 
     const button = screen.getByText(`${buttonText}`);
     await user.click(button)
-
-    screen.debug(container);
 
     expect(div).toHaveTextContent('17')
     expect(div).toHaveTextContent('https://reactpatterns.com/')

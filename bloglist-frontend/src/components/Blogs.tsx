@@ -2,7 +2,6 @@ import { useContext, useState } from 'react'
 import { userContext } from '../App.tsx'
 import { BlogT } from '../types/blog.ts'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Blog = ({ blog, updateLikes, removeBlog }: 
   {
     blog: BlogT,
