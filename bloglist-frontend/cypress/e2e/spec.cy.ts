@@ -55,7 +55,7 @@ describe('Blog app', function() {
       })
       cy.contains('Testing title field Testing author field')
     })
-    describe('and a blog exists', function() {
+    describe('A blog exists', function() {
       beforeEach(function() {
         cy.createBlog({
           author: 'Testing author field',
@@ -65,7 +65,7 @@ describe('Blog app', function() {
         cy.contains('Testing title field Testing author field')
       })
 
-      it('liking a blog', function() {
+      it('Liking a blog', function() {
         cy.contains('view').click()
         cy.contains('like').click()
         cy.contains('1')
