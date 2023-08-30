@@ -17,7 +17,7 @@ describe('Blog app', function() {
     cy.contains('Blogs')
   })
 
-  it('login form can be opened', function() {
+  it('login form can be opened and typed', function() {
     cy.contains('Login').click()
     cy.get('#username').type('David')
     cy.get('#password').type('987456123')
