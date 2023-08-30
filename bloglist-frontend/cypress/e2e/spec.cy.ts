@@ -70,6 +70,22 @@ describe('Blog app', function() {
         cy.contains('like').click()
         cy.contains('1')
       })
+
+      it('Deleting a blog', function() {
+        cy.contains('view').click()
+        cy.contains('remove').click()
+
+        cy.get('.success')
+          .should('contain', 'Testing title field has been removed')
+          .and('have.css', 'color', 'rgb(0, 128, 0)')
+        cy.contains('Testing title field Testing author field').should('not.exist')
+      })
+
+      it('Only the author can delete the blog', function() {
+        cy.contains('Log out').click()
+        cy.contains('view').click()
+        cy.contains('remove').should('not.exist')
+      })
     })
   })
 })

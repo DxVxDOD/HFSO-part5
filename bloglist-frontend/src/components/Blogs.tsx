@@ -40,7 +40,7 @@ const Blog = ({ blog, updateLikes, removeBlog }:
               <a href={blog.url}>{blog.url}</a>
               <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
               <p>{blog.user!.name}</p>
-              <button onClick={removeBlog} >reomve</button>
+              <button onClick={removeBlog} >remove</button>
               <button onClick={toggleVisibility} >hide</button>
             </>
           }
