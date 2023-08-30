@@ -30,7 +30,7 @@ const Blog = ({ blog, updateLikes, removeBlog }:
             <>
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
-              <p>{blog.likes}</p>
+              <p id='likes' >{blog.likes}</p>
               <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
               <p>{blog.user!.name}</p>
               <button onClick={toggleVisibility} >hide</button>
@@ -38,7 +38,7 @@ const Blog = ({ blog, updateLikes, removeBlog }:
             <>
               <p>{blog.title} {blog.author}</p>
               <a href={blog.url}>{blog.url}</a>
-              <p>{blog.likes}<button onClick={updateLikes} >like</button></p>
+              <p>{blog.likes}<button onClick={updateLikes} id='likeButton' >like</button></p>
               <p>{blog.user!.name}</p>
               <button onClick={removeBlog} >remove</button>
               <button onClick={toggleVisibility} >hide</button>
