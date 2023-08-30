@@ -49,11 +49,11 @@ describe('Blog app', function() {
 
     it('Creating a new blog', function() {
       cy.createBlog({
-        author: 'Testing author field',
-        title: 'Testing title field',
-        url: 'Testing url field'
+        author: 'Testing author field for creating it',
+        title: 'Testing title field for creating it',
+        url: 'Testing url field for creating it'
       })
-      cy.contains('Testing title field Testing author field')
+      cy.contains('Testing title field for creating it Testing author field for creating it')
     })
     describe('A blog exists', function() {
       beforeEach(function() {
