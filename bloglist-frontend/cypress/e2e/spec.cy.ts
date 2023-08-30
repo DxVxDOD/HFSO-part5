@@ -17,13 +17,28 @@ describe('Blog app', function() {
     cy.contains('Blogs')
   })
 
-  it('login form can be opened and typed', function() {
-    cy.contains('Login').click()
-    cy.get('#username').type('David')
-    cy.get('#password').type('987456123')
-    cy.get('#login-button').click()
+  describe('Login', function() {
+    it('Successful login with right credentials', function() {
+      cy.contains('Login').click()
+      cy.get('#username').type('David')
+      cy.get('#password').type('987456123')
+      cy.get('#login-button').click()
+  
+      cy.contains('David Orban Jozsef is logged in')
+    })
 
-    cy.contains('David Orban Jozsef is logged in')
+    it('Unsuccessful login witth wrong credentials', function() {
+      cy.contains('Login').click()
+      cy.get('#username').type('Wrong')
+      cy.get('#password').type('Credentials')
+      cy.get('#login-button').click()
+
+      cy.get('.error')
+        .should('contain', 'invalid username or password')
+        .and('have.css', 'color', 'rgb(255, 0, 0)')
+
+      cy.get('html').should('not.contain', 'David Orban Jozsef is logged in')
+    })
   })
 
   describe('When logged in', function() {
