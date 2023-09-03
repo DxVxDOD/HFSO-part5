@@ -28,7 +28,7 @@ const slice = createSlice({
     }
 })
 
-export const { setSuccess, clear, setError } = slice.actions
+const { setSuccess, clear, setError } = slice.actions
 
 export const dispalySuccess = (message: string, time: number): AppThunk => {
     return async dispatch => {

@@ -1,23 +1,52 @@
 import { FormEvent, useState } from "react";
 import { BlogT } from "../../types/blog";
+import { useRef } from "react";
+import { VisibilityHandle } from "../Togglable";
+import { useAppDispatch } from "../../app/hooks";
+import { createBlog, initializeBlogs } from "../../reducers/blogReducer";
+import { AxiosError } from "axios";
+import { dispalyError } from "../../reducers/notificationReducer";
 
-const BlogsForm = ({
-  handleNewBlog,
-}: {
-  handleNewBlog: (
-    e: FormEvent,
-    newBlog: BlogT,
-    setNewBlog: React.Dispatch<React.SetStateAction<BlogT>>,
-  ) => Promise<void>;
-}) => {
+const BlogsForm = () => {
+  // Custom hook needs to be made
   const [newBlog, setNewBlog] = useState<BlogT>({
     author: "",
     title: "",
     url: "",
   });
 
+  const blogFormRef = useRef<VisibilityHandle>();
+  const dispatch = useAppDispatch();
+
+  const handleNewBlog = async (e: FormEvent) => {
+    e.preventDefault();
+    if (blogFormRef.current) {
+      blogFormRef.current.toggleVisibility();
+
+      try {
+        const blogObject = {
+          title: newBlog.title,
+          author: newBlog.author,
+          url: newBlog.url,
+        };
+        console.log(blogObject)
+        dispatch(createBlog(blogObject));
+        dispatch(initializeBlogs());
+        setNewBlog({
+          title: "",
+          author: "",
+          url: "",
+        });
+      } catch (exception: unknown) {
+        if (exception instanceof AxiosError && exception.response) {
+          dispatch(dispalyError(exception.response.data.error, 5000));
+        }
+      }
+    }
+  };
+
   return (
-    <form onSubmit={(e) => handleNewBlog(e, newBlog, setNewBlog)}>
+    <form onSubmit={handleNewBlog}>
       <div>
         Author
         <input

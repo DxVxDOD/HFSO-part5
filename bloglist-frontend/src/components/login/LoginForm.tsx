@@ -1,15 +1,12 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import loginService from "../../services/login.js";
 import blogService from "../../services/blog.js";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "../../app/hooks.js";
 import { dispalyError } from "../../reducers/notificationReducer.js";
+import { setUser } from "../../reducers/userReducer.js";
 
-const LoginForm = ({
-  setUser,
-}: {
-  setUser: React.Dispatch<React.SetStateAction<null>>;
-}) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,7 +23,7 @@ const LoginForm = ({
 
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       blogService.setToken(user.token);
-      setUser(user);
+      dispatch(setUser(user))
       setUsername("");
       setPassword("");
     } catch (exception: unknown) {

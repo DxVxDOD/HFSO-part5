@@ -10,15 +10,6 @@ const slice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    addBlog(state, action) {
-      state.push(action.payload);
-    },
-    updateBlog(state, action) {
-      const blogToUpdate = action.payload;
-      return state.map((blog) =>
-        blog.id !== blogToUpdate.id ? blog : blogToUpdate,
-      );
-    },
     setBlog(state, action) {
       state = action.payload;
       return state;
@@ -26,7 +17,7 @@ const slice = createSlice({
   },
 });
 
-export const { addBlog, updateBlog, setBlog } = slice.actions;
+const { setBlog } = slice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async (dispatch) => {
@@ -37,17 +28,26 @@ export const initializeBlogs = (): AppThunk => {
 
 export const createBlog = (blog: BlogT): AppThunk => {
   return async (dispatch) => {
+    console.log(blog);
     const newBlog = await blogService.create(blog);
-    dispatch(addBlog(newBlog));
-    dispatch(dispalySuccess(`New blog: ${newBlog.title} by ${newBlog.author}`, 5000))
+    dispatch(initializeBlogs());
+    dispatch(
+      dispalySuccess(`New blog: ${newBlog.title} by ${newBlog.author}`, 5000),
+    );
   };
 };
 
 export const addUpdatedBlog = (blog: BlogT, id: string): AppThunk => {
   return async (dispatch) => {
-    const upToDateBlog = await blogService.update(id, blog);
-    dispatch(updateBlog(upToDateBlog));
-    dispatch(dispalySuccess(`New blog: ${upToDateBlog.title} by ${upToDateBlog.author}`, 5000))
+    const updatingBlog = { ...blog, likes: blog.likes! + 1 };
+    const upToDateBlog = await blogService.update(id, updatingBlog);
+    dispatch(initializeBlogs());
+    dispatch(
+      dispalySuccess(
+        `New blog: ${upToDateBlog.title} by ${upToDateBlog.author}`,
+        5000,
+      ),
+    );
   };
 };
 

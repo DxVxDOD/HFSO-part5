@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
-import { userContext } from "../../App";
+import { useState } from "react";
 import { BlogT } from "../../types/blog";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addUpdatedBlog,
   initializeBlogs,
@@ -14,7 +13,6 @@ import {
 } from "../../reducers/notificationReducer";
 
 const Blog = ({ blog }: { blog: BlogT }) => {
-  const user = useContext(userContext);
 
   const blogStyle = {
     paddingTop: 10,
@@ -27,19 +25,17 @@ const Blog = ({ blog }: { blog: BlogT }) => {
   const [visibility, setVisibility] = useState(false);
   const toggleVisibility = () => setVisibility(!visibility);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user)
 
   const updateLikes = async () => {
-    if (blog) {
-      const chnagedBlog = { ...blog, likes: blog.likes! + 1 };
       try {
-        dispatch(addUpdatedBlog(chnagedBlog, blog.id!));
+        dispatch(addUpdatedBlog(blog, blog.id!));
         dispatch(initializeBlogs());
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
           dispatch(dispalyError(exception.response.data.error, 5000));
         }
       }
-    }
   };
 
   const removeBlog = async () => {
