@@ -1,68 +1,72 @@
-import React, { FormEvent, useState } from 'react'
-import loginService from '../services/login.ts'
-import blogService from '../services/blog.ts'
-import { AxiosError } from 'axios'
+import React, { FormEvent, useState } from "react";
+import loginService from "../services/login.ts";
+import blogService from "../services/blog.ts";
+import { AxiosError } from "axios";
 
-const LoginForm = ({ setMessage, setMessageType, setUser }: 
-  {
-    setMessage: React.Dispatch<React.SetStateAction<string | null>>,
-    setMessageType: React.Dispatch<React.SetStateAction<string | null>>,
-    setUser: React.Dispatch<React.SetStateAction<null>>
-  }) => {
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const LoginForm = ({
+  setMessage,
+  setMessageType,
+  setUser,
+}: {
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  setMessageType: React.Dispatch<React.SetStateAction<string | null>>;
+  setUser: React.Dispatch<React.SetStateAction<null>>;
+}) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const user = await loginService.login({
         username: username,
         password: password,
-      })
+      });
 
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
+      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
+      blogService.setToken(user.token);
+      setUser(user);
+      setUsername("");
+      setPassword("");
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
-        setMessageType('error')
-        setMessage(exception.response.data.error)
+        setMessageType("error");
+        setMessage(exception.response.data.error);
         setTimeout(() => {
-          setMessage(null)
-        }, 5000)
+          setMessage(null);
+        }, 5000);
       }
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleLogin} >
+    <form onSubmit={handleLogin}>
       <div>
-            Username
+        Username
         <input
-          type='text'
+          type="text"
           value={username}
-          id='username'
-          name='Username'
+          id="username"
+          name="Username"
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
-            Password
+        Password
         <input
-          type='password'
+          type="password"
           value={password}
-          name='Password'
-          id='password'
+          name="Password"
+          id="password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button id='login-button' type='submit' >Login</button>
+      <button id="login-button" type="submit">
+        Login
+      </button>
     </form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
