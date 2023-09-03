@@ -4,13 +4,9 @@ import Blog from "./Blogs.tsx";
 import { BlogT } from "../types/blog.ts";
 
 const NotLoggedIn = ({
-  setMessage,
-  setMessageType,
   setUser,
   blogs,
 }: {
-  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
-  setMessageType: React.Dispatch<React.SetStateAction<string | null>>;
   setUser: React.Dispatch<React.SetStateAction<null>>;
   blogs: BlogT[];
 }) => {
@@ -18,8 +14,6 @@ const NotLoggedIn = ({
     <>
       <Togglable buttonLabel="Login">
         <LoginForm
-          setMessage={setMessage}
-          setMessageType={setMessageType}
           setUser={setUser}
         />
       </Togglable>

@@ -2,18 +2,18 @@ import React, { FormEvent, useState } from "react";
 import loginService from "../services/login.ts";
 import blogService from "../services/blog.ts";
 import { AxiosError } from "axios";
+import { useAppDispatch } from "../app/hooks.ts";
+import { dispalyError } from "../reducers/notificationReducer.ts";
 
 const LoginForm = ({
-  setMessage,
-  setMessageType,
   setUser,
 }: {
-  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
-  setMessageType: React.Dispatch<React.SetStateAction<string | null>>;
   setUser: React.Dispatch<React.SetStateAction<null>>;
 }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useAppDispatch()
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,11 +31,7 @@ const LoginForm = ({
       setPassword("");
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
-        setMessageType("error");
-        setMessage(exception.response.data.error);
-        setTimeout(() => {
-          setMessage(null);
-        }, 5000);
+        dispatch(dispalyError(exception.response.data.error, 5000))
       }
     }
   };

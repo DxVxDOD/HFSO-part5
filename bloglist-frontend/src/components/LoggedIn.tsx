@@ -6,21 +6,21 @@ import blogService from "../services/blog.ts";
 import { BlogT } from "../types/blog.ts";
 import { AxiosError } from "axios";
 import { User } from "../types/user.ts";
+import { useAppDispatch } from "../app/hooks.ts";
+import { dispalySuccess, dispalyError } from "../reducers/notificationReducer.ts";
 
 const LoggedIn = ({
   user,
   blogs,
   setBlogs,
-  setMessageType,
-  setMessage,
 }: {
   user: User;
   blogs: BlogT[];
   setBlogs: React.Dispatch<React.SetStateAction<BlogT[]>>;
-  setMessageType: React.Dispatch<React.SetStateAction<string | null>>;
-  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
   const blogFormRef = useRef<VisibilityHandle>();
+
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     window.localStorage.clear();
@@ -45,11 +45,12 @@ const LoggedIn = ({
         const response = await blogService.create(blogObject);
         const result = await blogService.getAll();
         setBlogs(result);
-        setMessageType("success");
-        setMessage(`New blog: ${response.title} by ${response.author}`);
-        setTimeout(() => {
-          setMessageType("");
-        }, 5000);
+        dispatch(
+          dispalySuccess(
+            `New blog: ${response.title} by ${response.author}`,
+            5000,
+          ),
+        );
         setNewBlog({
           title: "",
           author: "",
@@ -57,11 +58,7 @@ const LoggedIn = ({
         });
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
-          setMessageType("error");
-          setMessage(exception.response.data.error);
-          setTimeout(() => {
-            setMessageType("");
-          }, 5000);
+          dispatch(dispalyError(exception.response.data.error, 5000));
         }
       }
     }
@@ -75,18 +72,12 @@ const LoggedIn = ({
       try {
         const returnedNote = await blogService.update(id, chnagedBlog);
         await blogService.getAll().then((blogs) => setBlogs(blogs));
-        setMessageType("success");
-        setMessage(`${returnedNote.title} has been updated`);
-        setTimeout(() => {
-          setMessageType("");
-        }, 5000);
+        dispatch(
+          dispalySuccess(`${returnedNote.title} has been updated`, 5000),
+        );
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
-          setMessageType("error");
-          setMessage(exception.response.data.error);
-          setTimeout(() => {
-            setMessageType("");
-          }, 5000);
+          dispatch(dispalyError(exception.response.data.error, 5000));
         }
       }
     }
@@ -99,18 +90,10 @@ const LoggedIn = ({
       try {
         await blogService.remove(id);
         await blogService.getAll().then((blogs) => setBlogs(blogs));
-        setMessageType("success");
-        setMessage(`${blog.title} has been removed`);
-        setTimeout(() => {
-          setMessageType("");
-        }, 5000);
+        dispatch(dispalySuccess(`${blog.title} has been removed`, 5000));
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
-          setMessageType("error");
-          setMessage(exception.response.data.error);
-          setTimeout(() => {
-            setMessageType("");
-          }, 5000);
+          dispatch(dispalyError(exception.response.data.error, 5000));
         }
       }
     }

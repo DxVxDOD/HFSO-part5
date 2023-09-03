@@ -1,16 +1,15 @@
-const Notification = ({
-  message,
-  messageType,
-}: {
-  message: string | null;
-  messageType: null | string;
-}) => {
-  if (messageType === null) {
+import { useAppSelector } from "../app/hooks";
+
+const Notification = () => {
+  const message = useAppSelector((state) => state.notification);
+  console.log(message)
+
+  if (message.status === null) {
     return null;
-  } else if (messageType === "success") {
-    return <div className={messageType}>{message}</div>;
+  } else if (message.status === "success") {
+    return <div className={message.status}>{message.value}</div>;
   }
-  return <div className={messageType}>{message}</div>;
+  return <div className={message.status}>{message.value}</div>;
 };
 
 export default Notification;
