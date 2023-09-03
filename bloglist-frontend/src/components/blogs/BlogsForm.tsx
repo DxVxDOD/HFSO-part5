@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { BlogT } from "../types/blog.ts";
+import { BlogT } from "../../types/blog";
 
 const BlogsForm = ({
   handleNewBlog,

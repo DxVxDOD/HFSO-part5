@@ -1,15 +1,17 @@
-import Togglable from "./Togglable.tsx";
-import LoginForm from "./LoginForm.tsx";
-import Blog from "./Blogs.tsx";
-import { BlogT } from "../types/blog.ts";
+import Togglable from "../Togglable.js";
+import LoginForm from "./LoginForm.js";
+import Blog from "../blogs/Blogs.js";
+import { BlogT } from "../../types/blog.js";
+import { useAppSelector } from "../../app/hooks.js";
 
 const NotLoggedIn = ({
   setUser,
-  blogs,
 }: {
   setUser: React.Dispatch<React.SetStateAction<null>>;
-  blogs: BlogT[];
 }) => {
+
+  const blogs = useAppSelector(state => state.blog)
+
   return (
     <>
       <Togglable buttonLabel="Login">

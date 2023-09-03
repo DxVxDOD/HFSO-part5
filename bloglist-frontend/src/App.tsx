@@ -1,20 +1,19 @@
-import React, { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import blogService from "./services/blog.ts";
 import Notification from "./components/Notifications.tsx";
-import LoggedIn from "./components/LoggedIn.tsx";
-import NotLoggedIn from "./components/NotLoggedIn.tsx";
-import { type BlogT } from "./types/blog.ts";
+import LoggedIn from "./components/login/LoggedIn.tsx";
+import NotLoggedIn from "./components/login/NotLoggedIn.tsx";
+import { useAppDispatch } from "./app/hooks.ts";
+import { initializeBlogs } from "./reducers/blogReducer.ts";
 
 export const userContext = createContext(null);
 
 const App = () => {
-  const [blogs, setBlogs] = useState<BlogT[]>([]);
   const [user, setUser] = useState(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => {
-      setBlogs(blogs);
-    });
+    dispatch(initializeBlogs())
   }, []);
 
   useEffect(() => {
@@ -34,13 +33,10 @@ const App = () => {
         {user === null ? (
           <NotLoggedIn
             setUser={setUser}
-            blogs={blogs}
           />
         ) : (
           <LoggedIn
             user={user}
-            blogs={blogs}
-            setBlogs={setBlogs}
           />
         )}
       </div>

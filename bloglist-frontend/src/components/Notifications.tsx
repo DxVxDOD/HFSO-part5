@@ -2,7 +2,6 @@ import { useAppSelector } from "../app/hooks";
 
 const Notification = () => {
   const message = useAppSelector((state) => state.notification);
-  console.log(message)
 
   if (message.status === null) {
     return null;

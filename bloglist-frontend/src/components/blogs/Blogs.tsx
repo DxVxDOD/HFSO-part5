@@ -1,16 +1,19 @@
 import { useContext, useState } from "react";
-import { userContext } from "../App.tsx";
-import { BlogT } from "../types/blog.ts";
+import { userContext } from "../../App";
+import { BlogT } from "../../types/blog";
+import { useAppDispatch } from "../../app/hooks";
+import {
+  addUpdatedBlog,
+  initializeBlogs,
+  deleteBlog,
+} from "../../reducers/blogReducer";
+import { AxiosError } from "axios";
+import {
+  dispalyError,
+  dispalySuccess,
+} from "../../reducers/notificationReducer";
 
-const Blog = ({
-  blog,
-  updateLikes,
-  removeBlog,
-}: {
-  blog: BlogT;
-  updateLikes?: () => Promise<void>;
-  removeBlog?: () => Promise<void>;
-}) => {
+const Blog = ({ blog }: { blog: BlogT }) => {
   const user = useContext(userContext);
 
   const blogStyle = {
@@ -23,6 +26,34 @@ const Blog = ({
 
   const [visibility, setVisibility] = useState(false);
   const toggleVisibility = () => setVisibility(!visibility);
+  const dispatch = useAppDispatch();
+
+  const updateLikes = async () => {
+    if (blog) {
+      const chnagedBlog = { ...blog, likes: blog.likes! + 1 };
+      try {
+        dispatch(addUpdatedBlog(chnagedBlog, blog.id!));
+        dispatch(initializeBlogs());
+      } catch (exception: unknown) {
+        if (exception instanceof AxiosError && exception.response) {
+          dispatch(dispalyError(exception.response.data.error, 5000));
+        }
+      }
+    }
+  };
+
+  const removeBlog = async () => {
+    if (blog && window.confirm(`Would you like to remove ${blog.title} ?`)) {
+      try {
+        dispatch(deleteBlog(blog.id!));
+        dispatch(dispalySuccess(`${blog.title} has been removed`, 5000));
+      } catch (exception: unknown) {
+        if (exception instanceof AxiosError && exception.response) {
+          dispatch(dispalyError(exception.response.data.error, 5000));
+        }
+      }
+    }
+  };
 
   return (
     <div className="blog">

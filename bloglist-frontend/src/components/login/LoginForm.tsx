@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from "react";
-import loginService from "../services/login.ts";
-import blogService from "../services/blog.ts";
+import loginService from "../../services/login.js";
+import blogService from "../../services/blog.js";
 import { AxiosError } from "axios";
-import { useAppDispatch } from "../app/hooks.ts";
-import { dispalyError } from "../reducers/notificationReducer.ts";
+import { useAppDispatch } from "../../app/hooks.js";
+import { dispalyError } from "../../reducers/notificationReducer.js";
 
 const LoginForm = ({
   setUser,
