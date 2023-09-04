@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import notificationReducer from "../reducers/notificationReducer";
 import blogReducer from "../reducers/blogReducer";
 import userReducer from "../reducers/userReducer";
+import userArrayReducer from "../reducers/userArrayReducer";
 
 const store = configureStore({
   reducer: {
     notification: notificationReducer,
     blog: blogReducer,
     user: userReducer,
+    userArray: userArrayReducer
   },
 });
 

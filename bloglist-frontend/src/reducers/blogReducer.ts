@@ -10,19 +10,22 @@ const slice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    setBlog(state, action) {
+    set(state, action) {
       state = action.payload;
       return state;
     },
+    create(state, action) {
+      state.push(action.payload)
+    }
   },
 });
 
-const { setBlog } = slice.actions;
+const { set, create } = slice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async (dispatch) => {
     const blogs = await blogService.getAll();
-    dispatch(setBlog(blogs));
+    dispatch(set(blogs));
   };
 };
 
@@ -30,7 +33,7 @@ export const createBlog = (blog: BlogT): AppThunk => {
   return async (dispatch) => {
     console.log(blog);
     const newBlog = await blogService.create(blog);
-    dispatch(initializeBlogs());
+    dispatch(create(newBlog));
     dispatch(
       dispalySuccess(`New blog: ${newBlog.title} by ${newBlog.author}`, 5000),
     );
@@ -55,7 +58,7 @@ export const deleteBlog = (id: string): AppThunk => {
   return async (dispatch) => {
     await blogService.remove(id);
     const blogs = await blogService.getAll();
-    dispatch(setBlog(blogs));
+    dispatch(set(blogs));
   };
 };
 

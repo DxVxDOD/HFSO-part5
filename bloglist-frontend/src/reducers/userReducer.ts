@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "../app/store";
 import { User } from "../types/user";
 
-const initialState = {} as User;
+const initialState = null as unknown as User;
 
 const slice = createSlice({
   name: "user",

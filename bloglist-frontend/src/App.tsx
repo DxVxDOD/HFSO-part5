@@ -10,14 +10,13 @@ import { setUser } from "./reducers/userReducer.ts";
 const App = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-
   useEffect(() => {
     dispatch(initializeBlogs());
   }, []);
 
   useEffect(() => {
     const loggesUserJSON = window.localStorage.getItem("loggedBlogappUser");
-    if (loggesUserJSON != null) {
+    if (loggesUserJSON !== null) {
       const user = JSON.parse(loggesUserJSON);
       dispatch(setUser(user));
       blogService.setToken(user.token);
@@ -28,7 +27,7 @@ const App = () => {
     <div>
       <h1>Blogs app</h1>
       <Notification />
-      {user === null ? <NotLoggedIn /> : <LoggedIn user={user} />}
+      {user === null ? <NotLoggedIn /> : <LoggedIn />}
     </div>
   );
 };
