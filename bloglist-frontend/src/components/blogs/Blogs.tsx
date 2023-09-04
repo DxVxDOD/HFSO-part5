@@ -13,7 +13,6 @@ import {
 } from "../../reducers/notificationReducer";
 
 const Blog = ({ blog }: { blog: BlogT }) => {
-
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -25,17 +24,17 @@ const Blog = ({ blog }: { blog: BlogT }) => {
   const [visibility, setVisibility] = useState(false);
   const toggleVisibility = () => setVisibility(!visibility);
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user)
+  const user = useAppSelector((state) => state.user);
 
   const updateLikes = async () => {
-      try {
-        dispatch(addUpdatedBlog(blog, blog.id!));
-        dispatch(initializeBlogs());
-      } catch (exception: unknown) {
-        if (exception instanceof AxiosError && exception.response) {
-          dispatch(dispalyError(exception.response.data.error, 5000));
-        }
+    try {
+      dispatch(addUpdatedBlog(blog, blog.id!));
+      dispatch(initializeBlogs());
+    } catch (exception: unknown) {
+      if (exception instanceof AxiosError && exception.response) {
+        dispatch(dispalyError(exception.response.data.error, 5000));
       }
+    }
   };
 
   const removeBlog = async () => {

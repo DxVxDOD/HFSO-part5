@@ -10,7 +10,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,12 +23,12 @@ const LoginForm = () => {
 
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       blogService.setToken(user.token);
-      dispatch(setUser(user))
+      dispatch(setUser(user));
       setUsername("");
       setPassword("");
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
-        dispatch(dispalyError(exception.response.data.error, 5000))
+        dispatch(dispalyError(exception.response.data.error, 5000));
       }
     }
   };

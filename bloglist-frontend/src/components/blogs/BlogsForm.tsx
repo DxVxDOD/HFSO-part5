@@ -1,42 +1,40 @@
-import { FormEvent, useState } from "react";
-import { BlogT } from "../../types/blog";
-import { useRef } from "react";
+import { FormEvent } from "react";
 import { VisibilityHandle } from "../Togglable";
 import { useAppDispatch } from "../../app/hooks";
 import { createBlog, initializeBlogs } from "../../reducers/blogReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../../reducers/notificationReducer";
+import { useForm } from "../../hooks/useForm";
 
-const BlogsForm = () => {
-  // Custom hook needs to be made
-  const [newBlog, setNewBlog] = useState<BlogT>({
-    author: "",
-    title: "",
-    url: "",
-  });
+const BlogsForm = ({
+  blogFormRef,
+}: {
+  blogFormRef: React.MutableRefObject<VisibilityHandle | undefined>;
+}) => {
+  const { reset: resetAuthor, ...author } = useForm("text");
+  const { reset: resetTitle, ...title } = useForm("text");
+  const { reset: resetUrl, ...url } = useForm("text");
 
-  const blogFormRef = useRef<VisibilityHandle>();
   const dispatch = useAppDispatch();
 
   const handleNewBlog = async (e: FormEvent) => {
     e.preventDefault();
+
     if (blogFormRef.current) {
       blogFormRef.current.toggleVisibility();
+      const blogObject = {
+        title: title.value,
+        author: author.value,
+        url: url.value,
+      };
 
       try {
-        const blogObject = {
-          title: newBlog.title,
-          author: newBlog.author,
-          url: newBlog.url,
-        };
-        console.log(blogObject)
+        console.log(blogObject);
         dispatch(createBlog(blogObject));
         dispatch(initializeBlogs());
-        setNewBlog({
-          title: "",
-          author: "",
-          url: "",
-        });
+        resetAuthor();
+        resetTitle();
+        resetUrl();
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
           dispatch(dispalyError(exception.response.data.error, 5000));
@@ -49,42 +47,15 @@ const BlogsForm = () => {
     <form onSubmit={handleNewBlog}>
       <div>
         Author
-        <input
-          type="text"
-          name="Author"
-          placeholder="Author"
-          id="author"
-          value={newBlog.author}
-          onChange={({ target }) =>
-            setNewBlog({ ...newBlog, author: target.value })
-          }
-        />
+        <input {...author} />
       </div>
       <div>
         Title
-        <input
-          type="text"
-          name="Title"
-          placeholder="Title"
-          id="title"
-          value={newBlog.title}
-          onChange={({ target }) =>
-            setNewBlog({ ...newBlog, title: target.value })
-          }
-        />
+        <input {...title} />
       </div>
       <div>
         Url:
-        <input
-          type="text"
-          name="Url"
-          placeholder="Url"
-          id="url"
-          value={newBlog.url}
-          onChange={({ target }) =>
-            setNewBlog({ ...newBlog, url: target.value })
-          }
-        />
+        <input {...url} />
       </div>
       <button>Add blog</button>
     </form>

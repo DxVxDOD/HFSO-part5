@@ -19,20 +19,20 @@ const LoggedIn = ({ user }: { user: User }) => {
   return (
     <div>
       <p>{user.name} is logged in</p>
-        {blogs
-          .filter((blog: BlogT) => blog.user)
-          .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
-          .map((blog: BlogT) => {
-            if (blog.user!.username === user.username) {
-              return (
-                <div key={blog.id}>
-                  <Blog blog={blog} />
-                </div>
-              );
-            } else return <>You have not posted any blogs yet !</>;
-          })}
+      {blogs
+        .filter((blog: BlogT) => blog.user)
+        .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
+        .map((blog: BlogT) => {
+          if (blog.user!.username === user.username) {
+            return (
+              <div key={blog.id}>
+                <Blog blog={blog} />
+              </div>
+            );
+          } else return <>You have not posted any blogs yet !</>;
+        })}
       <Togglable buttonLabel="New blog" ref={blogFormRef}>
-        <BlogsForm />
+        <BlogsForm blogFormRef={blogFormRef} />
       </Togglable>
       <button onClick={handleLogout}>Log out</button>
     </div>
