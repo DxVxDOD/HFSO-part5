@@ -11,6 +11,8 @@ const LoggedInBlogs = () => {
 
   const blogFormRef = useRef<VisibilityHandle>();
 
+  // need to fix liking of the blogs
+
   return (
     <>
       {blogs.length < 1 ? (

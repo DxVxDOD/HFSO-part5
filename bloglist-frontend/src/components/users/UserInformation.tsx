@@ -4,6 +4,7 @@ import { User } from "../../types/user";
 
 const UserInformation = () => {
   const users = useAppSelector((state) => state.userArray);
+  const blogs = useAppSelector((state) => state.blog);
 
   return (
     <>
@@ -19,7 +20,7 @@ const UserInformation = () => {
           {users.map((user: User) => (
             <tr key={user.username}>
               <td>
-                <Link to={`/users/${user.id}`} state={user}>
+                <Link to={`/users/${user.id}`} state={{ user, blogs }}>
                   {user.username}
                 </Link>
               </td>

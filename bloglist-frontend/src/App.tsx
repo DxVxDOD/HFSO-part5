@@ -36,11 +36,11 @@ const App = () => {
     <>
       <h1>Blogs app</h1>
       <Notification />
-      <Menu/>
+      <Menu />
       <Routes>
         <Route path="/users/:id" element={<User />} />
-        <Route path="/" element={<Home/>} />
-        <Route path="/users" element={<UserInformation/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<UserInformation />} />
         {user === null ? (
           <>
             <Route path="/blogs" element={<NotLoggedInBlogs />} />
@@ -50,7 +50,6 @@ const App = () => {
         )}
         <Route path="/blog/:id" element={<Blog />} />
       </Routes>
-
     </>
   );
 };

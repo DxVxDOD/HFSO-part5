@@ -15,6 +15,7 @@ const Blog = () => {
   const { state } = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  console.log(state.user.username);
 
   const updateLikes = async () => {
     try {
@@ -42,22 +43,24 @@ const Blog = () => {
 
   return (
     <div className="blog">
-        <h2>{state.title} {state.author}</h2>
-        <a href={state.url}>{state.url}</a>
-        <p>{state.user.username}</p>
-        {user === null ? (
-            <p id="likes">{state.likes}</p>
-        ) : (
-          <>
-            <p>
-              {state.likes}
-              <button onClick={updateLikes} id="likeButton">
-                like
-              </button>
-            </p>
-            <button onClick={removeBlog}>remove</button>
-          </>
-        )}
+      <h2>
+        {state.title} {state.author}
+      </h2>
+      <a href={state.url}>{state.url}</a>
+      <p>{state.user.username}</p>
+      {user === null ? (
+        <p id="likes">{state.likes}</p>
+      ) : (
+        <>
+          <p>
+            {state.likes}
+            <button onClick={updateLikes} id="likeButton">
+              like
+            </button>
+          </p>
+          <button onClick={removeBlog}>remove</button>
+        </>
+      )}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import LoginForm from "./LoginForm.js";
 import CreateUserForm from "../users/CreateUserForm.js";
 import { useRef } from "react";
 
-
 const NotLoggedIn = () => {
   const signUpRef = useRef<VisibilityHandle>();
 
