@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks.js";
 import { BlogT } from "../../types/blog.js";
+import { useRef } from "react";
+import BlogsForm from "../blogs/BlogsForm.js";
+import Togglable, { VisibilityHandle } from "../Togglable.js";
 
 const LoggedInBlogs = () => {
   const blogs = useAppSelector((state) => state.blog);
   const user = useAppSelector((state) => state.user);
+
+  const blogFormRef = useRef<VisibilityHandle>();
 
   return (
     <>
@@ -38,6 +43,9 @@ const LoggedInBlogs = () => {
             </Link>
           </li>
         ))}
+      <Togglable buttonLabel="New blog" ref={blogFormRef}>
+        <BlogsForm blogFormRef={blogFormRef} />
+      </Togglable>
     </>
   );
 };
