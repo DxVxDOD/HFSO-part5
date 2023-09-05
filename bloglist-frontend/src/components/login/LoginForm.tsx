@@ -1,14 +1,16 @@
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import loginService from "../../services/login.js";
 import blogService from "../../services/blog.js";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "../../app/hooks.js";
 import { dispalyError } from "../../reducers/notificationReducer.js";
 import { setUser } from "../../reducers/userReducer.js";
+import { useForm } from "../../hooks/useForm.js";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+  const {reset: usernameReset, ...username} = useForm('text')
+  const {reset: passwordReset, ...password} = useForm('text')
 
   const dispatch = useAppDispatch();
 
@@ -17,15 +19,15 @@ const LoginForm = () => {
 
     try {
       const user = await loginService.login({
-        username: username,
-        password: password,
+        username: username.value,
+        password: password.value,
       });
 
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       blogService.setToken(user.token);
       dispatch(setUser(user));
-      setUsername("");
-      setPassword("");
+      usernameReset()
+      passwordReset()
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
         dispatch(dispalyError(exception.response.data.error, 5000));
@@ -37,23 +39,11 @@ const LoginForm = () => {
     <form onSubmit={handleLogin}>
       <div>
         Username
-        <input
-          type="text"
-          value={username}
-          id="username"
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
+        <input {...username} />
       </div>
       <div>
         Password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          id="password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
+        <input {...password} />
       </div>
       <button id="login-button" type="submit">
         Login

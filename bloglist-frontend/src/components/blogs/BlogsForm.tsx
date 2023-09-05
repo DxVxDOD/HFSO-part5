@@ -20,25 +20,24 @@ const BlogsForm = ({
   const handleNewBlog = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (blogFormRef.current) {
-      blogFormRef.current.toggleVisibility();
-      const blogObject = {
-        title: title.value,
-        author: author.value,
-        url: url.value,
-      };
+    blogFormRef.current?.toggleVisibility();
 
-      try {
-        console.log(blogObject);
-        dispatch(createBlog(blogObject));
-        dispatch(initializeBlogs());
-        resetAuthor();
-        resetTitle();
-        resetUrl();
-      } catch (exception: unknown) {
-        if (exception instanceof AxiosError && exception.response) {
-          dispatch(dispalyError(exception.response.data.error, 5000));
-        }
+    const blogObject = {
+      title: title.value,
+      author: author.value,
+      url: url.value,
+    };
+
+    try {
+      console.log(blogObject);
+      dispatch(createBlog(blogObject));
+      dispatch(initializeBlogs());
+      resetAuthor();
+      resetTitle();
+      resetUrl();
+    } catch (exception: unknown) {
+      if (exception instanceof AxiosError && exception.response) {
+        dispatch(dispalyError(exception.response.data.error, 5000));
       }
     }
   };

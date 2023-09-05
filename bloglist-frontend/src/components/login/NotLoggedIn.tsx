@@ -1,11 +1,13 @@
-import Togglable from "../Togglable.js";
+import Togglable, { VisibilityHandle } from "../Togglable.js";
 import LoginForm from "./LoginForm.js";
 import Blog from "../blogs/Blogs.js";
 import { useAppSelector } from "../../app/hooks.js";
 import CreateUserForm from "../users/CreateUserForm.js";
+import { useRef } from "react";
 
 const NotLoggedIn = () => {
   const blogs = useAppSelector((state) => state.blog);
+  const signUpRef = useRef<VisibilityHandle>();
 
   return (
     <>
@@ -27,8 +29,8 @@ const NotLoggedIn = () => {
       <Togglable buttonLabel="Login">
         <LoginForm />
       </Togglable>
-      <Togglable buttonLabel="Sign up">
-        <CreateUserForm />
+      <Togglable buttonLabel="Sign up" ref={signUpRef} >
+        <CreateUserForm signUpRef={signUpRef} />
       </Togglable>
     </>
   );

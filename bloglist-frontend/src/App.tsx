@@ -9,28 +9,32 @@ import { setUser } from "./reducers/userReducer.ts";
 import { initializeUsers } from "./reducers/userArrayReducer.ts";
 
 const App = () => {
+  
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(initializeBlogs());
-    dispatch(initializeUsers());
   }, []);
 
   useEffect(() => {
     const loggesUserJSON = window.localStorage.getItem("loggedBlogappUser");
     if (loggesUserJSON !== null) {
-      const user = JSON.parse(loggesUserJSON);
-      dispatch(setUser(user));
-      blogService.setToken(user.token);
+      const loggedUser = JSON.parse(loggesUserJSON);
+      blogService.setToken(loggedUser.token);
+      dispatch(initializeUsers());
+      dispatch(setUser(loggedUser));
     }
   }, []);
 
+  console.log(user, 'App')
+
   return (
-    <div>
+    <>
       <h1>Blogs app</h1>
       <Notification />
       {user === null ? <NotLoggedIn /> : <LoggedIn />}
-    </div>
+    </>
   );
 };
 
