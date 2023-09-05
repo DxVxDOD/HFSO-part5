@@ -8,8 +8,10 @@ import { initializeBlogs } from "./reducers/blogReducer.ts";
 import { setUser } from "./reducers/userReducer.ts";
 import { initializeUsers } from "./reducers/userArrayReducer.ts";
 import { Route, Routes } from "react-router-dom";
-import UserInformation from "./components/users/UserInformation.tsx";
 import User from "./components/users/User.tsx";
+import Blog from "./components/blogs/Blogs.tsx";
+import NotLoggedInBlogs from "./components/blogs/NotLoggedInBlogs.tsx";
+import LoggedInBlogs from "./components/blogs/LoggedInBlogs.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -33,11 +35,19 @@ const App = () => {
     <>
       <h1>Blogs app</h1>
       <Notification />
-      {user === null ? <NotLoggedIn /> : <LoggedIn />}
+      {user === null ? <NotLoggedIn/> : <LoggedIn/>}
       <Routes>
         <Route path="users/:id" element={<User />} />
-        <Route path="/" element={<UserInformation />} />
+        {user === null ? (
+          <>
+            <Route path="/" element={<NotLoggedInBlogs />} />
+          </>
+        ) : (
+          <Route path="/" element={<LoggedInBlogs />} />
+        )}
+        <Route path="/blog/:id" element={<Blog />} />
       </Routes>
+
     </>
   );
 };

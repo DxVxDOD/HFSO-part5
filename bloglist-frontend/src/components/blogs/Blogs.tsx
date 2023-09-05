@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { BlogT } from "../../types/blog";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addUpdatedBlog,
@@ -11,24 +9,16 @@ import {
   dispalyError,
   dispalySuccess,
 } from "../../reducers/notificationReducer";
+import { useLocation } from "react-router-dom";
 
-const Blog = ({ blog }: { blog: BlogT }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
-  };
-
-  const [visibility, setVisibility] = useState(false);
-  const toggleVisibility = () => setVisibility(!visibility);
+const Blog = () => {
+  const { state } = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
   const updateLikes = async () => {
     try {
-      dispatch(addUpdatedBlog(blog, blog.id!));
+      dispatch(addUpdatedBlog(state, state.id!));
       dispatch(initializeBlogs());
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
@@ -38,10 +28,10 @@ const Blog = ({ blog }: { blog: BlogT }) => {
   };
 
   const removeBlog = async () => {
-    if (blog && window.confirm(`Would you like to remove ${blog.title} ?`)) {
+    if (state && window.confirm(`Would you like to remove ${state.title} ?`)) {
       try {
-        dispatch(deleteBlog(blog.id!));
-        dispatch(dispalySuccess(`${blog.title} has been removed`, 5000));
+        dispatch(deleteBlog(state.id!));
+        dispatch(dispalySuccess(`${state.title} has been removed`, 5000));
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
           dispatch(dispalyError(exception.response.data.error, 5000));
@@ -52,46 +42,22 @@ const Blog = ({ blog }: { blog: BlogT }) => {
 
   return (
     <div className="blog">
-      {visibility ? (
-        <div style={blogStyle}>
-          {user === null ? (
-            <>
-              <p>
-                {blog.title} {blog.author}
-              </p>
-              <a href={blog.url}>{blog.url}</a>
-              <p id="likes">{blog.likes}</p>
-              <p>
-                {blog.likes}
-                <button onClick={updateLikes}>like</button>
-              </p>
-              <p>{blog.user!.name}</p>
-              <button onClick={toggleVisibility}>hide</button>
-            </>
-          ) : (
-            <>
-              <p>
-                {blog.title} {blog.author}
-              </p>
-              <a href={blog.url}>{blog.url}</a>
-              <p>
-                {blog.likes}
-                <button onClick={updateLikes} id="likeButton">
-                  like
-                </button>
-              </p>
-              <p>{blog.user!.name}</p>
-              <button onClick={removeBlog}>remove</button>
-              <button onClick={toggleVisibility}>hide</button>
-            </>
-          )}
-        </div>
-      ) : (
-        <div style={blogStyle}>
-          {blog.title} {blog.author}
-          <button onClick={toggleVisibility}>view</button>
-        </div>
-      )}
+        <h2>{state.title} {state.author}</h2>
+        <a href={state.url}>{state.url}</a>
+        <p>{state.user.username}</p>
+        {user === null ? (
+            <p id="likes">{state.likes}</p>
+        ) : (
+          <>
+            <p>
+              {state.likes}
+              <button onClick={updateLikes} id="likeButton">
+                like
+              </button>
+            </p>
+            <button onClick={removeBlog}>remove</button>
+          </>
+        )}
     </div>
   );
 };
