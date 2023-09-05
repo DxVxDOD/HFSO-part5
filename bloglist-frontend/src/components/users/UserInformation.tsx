@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { User } from "../../types/user";
 
@@ -17,7 +18,11 @@ const UserInformation = () => {
         <tbody>
           {users.map((user: User) => (
             <tr key={user.username}>
-              <td>{user.username}</td>
+              <td>
+                <Link to={`/users/${user.id}`} state={user}>
+                  {user.username}
+                </Link>
+              </td>
               <td>{user.blogs!.length}</td>
             </tr>
           ))}

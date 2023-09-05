@@ -29,7 +29,7 @@ const NotLoggedIn = () => {
       <Togglable buttonLabel="Login">
         <LoginForm />
       </Togglable>
-      <Togglable buttonLabel="Sign up" ref={signUpRef} >
+      <Togglable buttonLabel="Sign up" ref={signUpRef}>
         <CreateUserForm signUpRef={signUpRef} />
       </Togglable>
     </>

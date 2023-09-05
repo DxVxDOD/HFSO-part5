@@ -8,9 +8,8 @@ import { setUser } from "../../reducers/userReducer.js";
 import { useForm } from "../../hooks/useForm.js";
 
 const LoginForm = () => {
-
-  const {reset: usernameReset, ...username} = useForm('text')
-  const {reset: passwordReset, ...password} = useForm('text')
+  const { reset: usernameReset, ...username } = useForm("text");
+  const { reset: passwordReset, ...password } = useForm("text");
 
   const dispatch = useAppDispatch();
 
@@ -26,8 +25,8 @@ const LoginForm = () => {
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       blogService.setToken(user.token);
       dispatch(setUser(user));
-      usernameReset()
-      passwordReset()
+      usernameReset();
+      passwordReset();
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
         dispatch(dispalyError(exception.response.data.error, 5000));

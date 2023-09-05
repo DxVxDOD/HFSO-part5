@@ -5,8 +5,9 @@ type UserT = {
   name: string;
   password: string;
   blogs: Blogs[];
+  id: string;
 };
 
-type User = Optional<UserT, "blogs">;
+type User = Optional<UserT, "blogs", "id">;
 
 export { User };

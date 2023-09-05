@@ -1,10 +1,9 @@
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import BlogsForm from "../blogs/BlogsForm.js";
 import Togglable, { VisibilityHandle } from "../Togglable.js";
 import Blog from "../blogs/Blogs.js";
 import { BlogT } from "../../types/blog.js";
 import { useAppSelector } from "../../app/hooks.js";
-import UserInformation from "../users/UserInformation.js";
 
 const LoggedIn = () => {
   const blogs = useAppSelector((state) => state.blog);
@@ -40,7 +39,6 @@ const LoggedIn = () => {
         <BlogsForm blogFormRef={blogFormRef} />
       </Togglable>
       <button onClick={handleLogout}>Log out</button>
-      <UserInformation />
     </>
   );
 };

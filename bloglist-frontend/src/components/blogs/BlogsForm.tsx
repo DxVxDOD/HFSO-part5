@@ -29,7 +29,6 @@ const BlogsForm = ({
     };
 
     try {
-      console.log(blogObject);
       dispatch(createBlog(blogObject));
       dispatch(initializeBlogs());
       resetAuthor();

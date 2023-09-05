@@ -31,7 +31,6 @@ export const initializeBlogs = (): AppThunk => {
 
 export const createBlog = (blog: BlogT): AppThunk => {
   return async (dispatch) => {
-    console.log(blog);
     const newBlog = await blogService.create(blog);
     dispatch(create(newBlog));
     dispatch(
