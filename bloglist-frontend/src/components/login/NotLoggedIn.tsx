@@ -6,7 +6,6 @@ import CreateUserForm from "../users/CreateUserForm.js";
 
 const NotLoggedIn = () => {
   const blogs = useAppSelector((state) => state.blog);
-  console.log(blogs)
 
   return (
     <>
@@ -15,7 +14,7 @@ const NotLoggedIn = () => {
       ) : (
         <>
           <ul>
-            {...blogs
+            {[...blogs]
               .sort((a, b) => b.likes! - a.likes!)
               .map((blog) => (
                 <li key={blog.id}>
@@ -28,8 +27,8 @@ const NotLoggedIn = () => {
       <Togglable buttonLabel="Login">
         <LoginForm />
       </Togglable>
-      <Togglable buttonLabel="Sign up" >
-        <CreateUserForm/>
+      <Togglable buttonLabel="Sign up">
+        <CreateUserForm />
       </Togglable>
     </>
   );

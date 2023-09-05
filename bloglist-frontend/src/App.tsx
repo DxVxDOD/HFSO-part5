@@ -6,12 +6,14 @@ import NotLoggedIn from "./components/login/NotLoggedIn.tsx";
 import { useAppDispatch, useAppSelector } from "./app/hooks.ts";
 import { initializeBlogs } from "./reducers/blogReducer.ts";
 import { setUser } from "./reducers/userReducer.ts";
+import { initializeUsers } from "./reducers/userArrayReducer.ts";
 
 const App = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   useEffect(() => {
     dispatch(initializeBlogs());
+    dispatch(initializeUsers());
   }, []);
 
   useEffect(() => {

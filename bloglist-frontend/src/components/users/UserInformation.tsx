@@ -1,8 +1,8 @@
 import { useAppSelector } from "../../app/hooks";
-import { BlogT } from "../../types/blog";
+import { User } from "../../types/user";
 
 const UserInformation = () => {
-  const blogs = useAppSelector((state) => state.blog);
+  const users = useAppSelector((state) => state.userArray);
 
   return (
     <>
@@ -15,16 +15,13 @@ const UserInformation = () => {
           </tr>
         </thead>
         <tbody>
-          {blogs.map((blog: BlogT) => (
-            <tr key={blog.id}>
-              <td>{blog.user?.name}</td>
-              <td>{blog.user?.blogs?.length}</td>
+          {users.map((user: User) => (
+            <tr key={user.username}>
+              <td>{user.username}</td>
+              <td>{user.blogs!.length}</td>
             </tr>
           ))}
         </tbody>
-        <tfoot>
-            
-        </tfoot>
       </table>
     </>
   );

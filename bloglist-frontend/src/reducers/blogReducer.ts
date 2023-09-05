@@ -15,8 +15,8 @@ const slice = createSlice({
       return state;
     },
     create(state, action) {
-      state.push(action.payload)
-    }
+      state.push(action.payload);
+    },
   },
 });
 
