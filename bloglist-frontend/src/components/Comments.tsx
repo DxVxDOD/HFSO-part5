@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useForm } from "../hooks/useForm";
-import { createComment, initializeComments } from "../reducers/commentReducer";
+import { createComment } from "../reducers/commentReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../reducers/notificationReducer";
 
