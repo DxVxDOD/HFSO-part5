@@ -13,6 +13,7 @@ import LoggedInBlogs from "./components/blogs/LoggedInBlogs.tsx";
 import Menu from "./components/Menu.tsx";
 import UserInformation from "./components/users/UserInformation.tsx";
 import Home from "./components/Home.tsx";
+import { initializeComments } from "./reducers/commentReducer.ts";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs());
+    dispatch(initializeComments())
   }, []);
 
   useEffect(() => {

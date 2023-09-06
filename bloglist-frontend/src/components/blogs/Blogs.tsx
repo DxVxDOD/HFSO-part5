@@ -10,12 +10,12 @@ import {
   dispalySuccess,
 } from "../../reducers/notificationReducer";
 import { useLocation } from "react-router-dom";
+import Comments from "../Comments";
 
 const Blog = () => {
   const { state } = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  console.log(state.user.username);
 
   const updateLikes = async () => {
     try {
@@ -61,6 +61,7 @@ const Blog = () => {
           <button onClick={removeBlog}>remove</button>
         </>
       )}
+      <Comments blogId={`${state.id}`} />
     </div>
   );
 };
