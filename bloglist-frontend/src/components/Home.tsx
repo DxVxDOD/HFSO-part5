@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import NotLoggedIn from "./login/NotLoggedIn";
 import { BlogT } from "../types/blog";
+import { Link, List, ListItem } from "@mui/material";
 
 const Home = () => {
   const user = useAppSelector((state) => state.user);
@@ -15,18 +16,18 @@ const Home = () => {
         <>
           <p>{user.username} is logged in</p>
           <h3>My blogs</h3>
-          <ul>
+          <List>
             {[...blogs]
               .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
               .filter((blog: BlogT) => blog.user.username === user.username)
               .map((blog: BlogT) => (
-                <li key={blog.id}>
-                  <Link to={`/blog/${blog.id}`} state={blog}>
+                <ListItem key={blog.id}>
+                  <Link to={`/blog/${blog.id}`} underline="hover" component={RouterLink} state={blog}>
                     {blog.title} by {blog.author}
                   </Link>
-                </li>
+                </ListItem>
               ))}
-          </ul>
+          </List>
         </>
       )}
     </>

@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState, forwardRef, useImperativeHandle, ReactNode } from "react";
 
 export type VisibilityHandle = {
@@ -25,11 +26,11 @@ const Togglable = forwardRef(
     return (
       <>
         <div style={hideWhenVisible}>
-          <button onClick={toggleVisibility}>{buttonLabel}</button>
+          <Button onClick={toggleVisibility}>{buttonLabel}</Button>
         </div>
         <div style={showWhenVisible} className="togglableContent">
           {children}
-          <button onClick={toggleVisibility}>cancel</button>
+          <Button color="secondary" onClick={toggleVisibility}>cancel</Button>
         </div>
       </>
     );

@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@mui/material";
+import {Button} from "@mui/material";
 
 const Menu = () => {
   const handleLogout = () => {
@@ -8,10 +10,10 @@ const Menu = () => {
 
   return (
     <>
-      <Link to={"/blogs"}>Blogs</Link>
-      <Link to={"/users"}>Users</Link>
-      <Link to={"/"}>Home</Link>
-      <button onClick={handleLogout}>Log out</button>
+      <Link component={RouterLink} underline="hover" to={"/blogs"}>Blogs</Link>
+      <Link component={RouterLink} underline="hover" to={"/users"}>Users</Link>
+      <Link component={RouterLink} underline="hover"  to={"/"}>Home</Link>
+      <Button variant="outlined" color="error" onClick={handleLogout}>Log out</Button>
     </>
   );
 };

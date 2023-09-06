@@ -4,11 +4,11 @@ import { useForm } from "../hooks/useForm";
 import { createComment } from "../reducers/commentReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../reducers/notificationReducer";
+import { Button, TextField } from "@mui/material";
 
 const Comments = ({ blogId }: { blogId: string }) => {
   const comments = useAppSelector((state) => state.comments);
   const dispatch = useAppDispatch();
-  console.log(comments);
 
   const { reset: resetComment, ...comment } = useForm("text");
 
@@ -46,8 +46,10 @@ const Comments = ({ blogId }: { blogId: string }) => {
         </>
       )}
       <form onSubmit={handleComment}>
-        <input {...comment} />
-        <button>comment</button>
+        <TextField {...comment}
+        variant='standard'
+        label='Comment' />
+        <Button variant='outlined' >comment</Button>
       </form>
     </>
   );

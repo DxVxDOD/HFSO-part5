@@ -3,6 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import { useAppDispatch } from "../../app/hooks";
 import { createUsers } from "../../reducers/userArrayReducer";
 import { VisibilityHandle } from "../Togglable";
+import { Button, TextField } from "@mui/material";
 
 const CreateUserForm = ({
   signUpRef,
@@ -40,18 +41,18 @@ const CreateUserForm = ({
       <h2>Create an account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <input placeholder="username" {...username} />
+          <TextField required label="Required" placeholder="Username" {...username} />
         </div>
         <div>
-          <input placeholder="name" {...name} />
+          <TextField required label="Required" placeholder="Name" {...name} />
         </div>
         <div>
-          <input placeholder="password" {...password} />
+          <TextField required label="Required" placeholder="Password" {...password} />
         </div>
-        <button>Create</button>
-        <button type="button" onClick={handleReset}>
+        <Button variant="contained" color="success" >Create</Button>
+        <Button variant="outlined" color="error" type="button" onClick={handleReset}>
           Reset fields
-        </button>
+        </Button>
       </form>
     </>
   );
