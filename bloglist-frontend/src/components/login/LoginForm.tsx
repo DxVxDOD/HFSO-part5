@@ -6,8 +6,7 @@ import { useAppDispatch } from "../../app/hooks.js";
 import { dispalyError } from "../../reducers/notificationReducer.js";
 import { setUser } from "../../reducers/userReducer.js";
 import { useForm } from "../../hooks/useForm.js";
-import "../../styles/loginPage.css";
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, Stack, TextField } from "@mui/material";
 
 const LoginForm = () => {
   const { reset: usernameReset, ...username } = useForm("text");
@@ -37,30 +36,47 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="log-in-form" onSubmit={handleLogin}>
-      <div>
+    <Paper
+      sx={{
+        padding: "1.5em",
+        display: "flex",
+        flexDirection: "column",
+        gap: '0.5em',
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      component="form"
+      onSubmit={handleLogin}
+    >
+      <Stack direction="column" spacing={2}>
         <TextField
+          size="small"
           required
           autoFocus
           color="success"
           variant="standard"
-          label="username"
+          label="Username"
           {...username}
         />
-      </div>
-      <div>
         <TextField
+          size="small"
           required
           variant="standard"
-          label="password"
+          label="Password"
           color="success"
           {...password}
         />
-      </div>
-      <Button color="success" variant="outlined" size="small" id="login-button" type="submit">
+      </Stack>
+      <Button
+        color="success"
+        variant="outlined"
+        size="small"
+        id="login-button"
+        type="submit"
+      >
         Login
       </Button>
-    </form>
+    </Paper>
   );
 };
 

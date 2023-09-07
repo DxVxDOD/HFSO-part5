@@ -5,6 +5,7 @@ import { createBlog, initializeBlogs } from "../../reducers/blogReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../../reducers/notificationReducer";
 import { useForm } from "../../hooks/useForm";
+import { Button, Paper, Stack, TextField } from "@mui/material";
 
 const BlogsForm = ({
   blogFormRef,
@@ -42,21 +43,44 @@ const BlogsForm = ({
   };
 
   return (
-    <form onSubmit={handleNewBlog}>
-      <div>
-        Author
-        <input {...author} />
-      </div>
-      <div>
-        Title
-        <input {...title} />
-      </div>
-      <div>
-        Url:
-        <input {...url} />
-      </div>
-      <button>Add blog</button>
-    </form>
+    <Paper sx={{
+      padding: '2em'
+    }} >
+      <form onSubmit={handleNewBlog}>
+        <Stack direction="column" spacing={2}>
+          <TextField
+            required
+            size="small"
+            label="Author"
+            variant="standard"
+            placeholder="Author"
+            color="success"
+            {...author}
+          />
+          <TextField
+            color="success"
+            required
+            size="small"
+            label="Title"
+            variant="standard"
+            placeholder="Title"
+            {...title}
+          />
+          <TextField
+            required
+            color="success"
+            size="small"
+            label="Url"
+            variant="standard"
+            placeholder="Url"
+            {...url}
+          />
+        </Stack>
+        <Button type="submit" color="success" variant="outlined" size="small">
+          Add blog
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

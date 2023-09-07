@@ -3,7 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import { useAppDispatch } from "../../app/hooks";
 import { createUsers } from "../../reducers/userArrayReducer";
 import { VisibilityHandle } from "../Togglable";
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
 
 const CreateUserForm = ({
   signUpRef,
@@ -37,37 +37,38 @@ const CreateUserForm = ({
   };
 
   return (
-    <>
-      <h2>Create an account</h2>
+    <Paper sx={{
+      padding: '1.5em',
+    }} >
+      <Typography variant="h5" component='h2' >Create an account</Typography>
       <form className="from-field" onSubmit={handleSubmit}>
-        <div>
+        <Stack direction="column" spacing={2} >
           <TextField
             required
+            size="small"
             label="Username"
             variant="standard"
             placeholder="Username"
             {...username}
           />
-        </div>
-        <div>
           <TextField
+            size="small"
             required
             label="name"
             placeholder="Name"
             variant="standard"
             {...name}
           />
-        </div>
-        <div>
           <TextField
+            size="small"
             required
             label="Password"
             variant="standard"
             placeholder="Password"
             {...password}
           />
-        </div>
-        <div className="bttn-field">
+        </Stack>
+        <Stack className="bttn-field">
           <Button size="small" variant="outlined" color="success">
             Create
           </Button>
@@ -80,9 +81,9 @@ const CreateUserForm = ({
           >
             Reset fields
           </Button>
-        </div>
+        </Stack>
       </form>
-    </>
+    </Paper>
   );
 };
 

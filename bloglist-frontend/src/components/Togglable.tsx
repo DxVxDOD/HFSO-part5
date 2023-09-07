@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useState, forwardRef, useImperativeHandle, ReactNode } from "react";
+import '../styles/loginPage.css'
 
 export type VisibilityHandle = {
   toggleVisibility: () => void;
@@ -30,7 +31,7 @@ const Togglable = forwardRef(
         </div>
         <div style={showWhenVisible} className="togglableContent">
           {children}
-          <Button color="secondary" size="small" onClick={toggleVisibility}>Cancel</Button>
+          <Button color="secondary" className="cancel-bttn" variant="outlined" size="small" onClick={toggleVisibility}>Cancel</Button>
         </div>
       </>
     );

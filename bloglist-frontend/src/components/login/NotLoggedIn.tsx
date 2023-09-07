@@ -2,7 +2,7 @@ import Togglable, { VisibilityHandle } from "../Togglable.js";
 import LoginForm from "./LoginForm.js";
 import CreateUserForm from "../users/CreateUserForm.js";
 import { useRef } from "react";
-import '../../styles/loginPage.css'
+import "../../styles/loginPage.css";
 
 const NotLoggedIn = () => {
   const signUpRef = useRef<VisibilityHandle>();

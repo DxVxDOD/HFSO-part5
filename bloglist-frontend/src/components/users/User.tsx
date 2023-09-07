@@ -1,13 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 import { BlogT } from "../../types/blog";
+import { Typography } from "@mui/material";
 
 const User = () => {
   const { state } = useLocation();
+  console.log(state)
 
   return (
     <>
-      <h2>{state.username}s stats:</h2>
-      <h3>Added blogs</h3>
+      <Typography component="h2" variant="h5">
+        {state.user.username}s stats:
+      </Typography>
+      <Typography component='h3' variant="h6" >
+      Added blogs
+      </Typography>
       {state.blogs.length < 1 ? (
         <>You haven't posted any blogs yet</>
       ) : (

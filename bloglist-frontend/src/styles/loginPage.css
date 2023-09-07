@@ -1,19 +1,9 @@
 .log-in-field {
+    margin-top: 1em;
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 1em;
-}
-
-.log-in-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#login-button {
-    width: fit-content;
-    margin-top: 0.5em;
+    gap: 0.5em;
 }
 
 .bttn-field {
@@ -31,4 +21,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.togglableContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
 }
