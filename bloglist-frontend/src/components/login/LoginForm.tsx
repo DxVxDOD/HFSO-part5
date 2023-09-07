@@ -6,10 +6,12 @@ import { useAppDispatch } from "../../app/hooks.js";
 import { dispalyError } from "../../reducers/notificationReducer.js";
 import { setUser } from "../../reducers/userReducer.js";
 import { useForm } from "../../hooks/useForm.js";
+import "../../styles/loginPage.css";
+import { Button, TextField } from "@mui/material";
 
 const LoginForm = () => {
   const { reset: usernameReset, ...username } = useForm("text");
-  const { reset: passwordReset, ...password } = useForm("text");
+  const { reset: passwordReset, ...password } = useForm("password");
 
   const dispatch = useAppDispatch();
 
@@ -35,18 +37,29 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form className="log-in-form" onSubmit={handleLogin}>
       <div>
-        Username
-        <input {...username} />
+        <TextField
+          required
+          autoFocus
+          color="success"
+          variant="standard"
+          label="username"
+          {...username}
+        />
       </div>
       <div>
-        Password
-        <input {...password} />
+        <TextField
+          required
+          variant="standard"
+          label="password"
+          color="success"
+          {...password}
+        />
       </div>
-      <button id="login-button" type="submit">
+      <Button color="success" variant="outlined" size="small" id="login-button" type="submit">
         Login
-      </button>
+      </Button>
     </form>
   );
 };

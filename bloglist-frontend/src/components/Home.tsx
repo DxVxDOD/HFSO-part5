@@ -1,6 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
-import NotLoggedIn from "./login/NotLoggedIn";
 import { BlogT } from "../types/blog";
 import { Link, List, ListItem } from "@mui/material";
 
@@ -11,7 +10,7 @@ const Home = () => {
   return (
     <>
       {user === null ? (
-        <NotLoggedIn />
+        <>Proper home page</>
       ) : (
         <>
           <p>{user.username} is logged in</p>

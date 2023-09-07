@@ -39,20 +39,48 @@ const CreateUserForm = ({
   return (
     <>
       <h2>Create an account</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="from-field" onSubmit={handleSubmit}>
         <div>
-          <TextField required label="Required" placeholder="Username" {...username} />
+          <TextField
+            required
+            label="Username"
+            variant="standard"
+            placeholder="Username"
+            {...username}
+          />
         </div>
         <div>
-          <TextField required label="Required" placeholder="Name" {...name} />
+          <TextField
+            required
+            label="name"
+            placeholder="Name"
+            variant="standard"
+            {...name}
+          />
         </div>
         <div>
-          <TextField required label="Required" placeholder="Password" {...password} />
+          <TextField
+            required
+            label="Password"
+            variant="standard"
+            placeholder="Password"
+            {...password}
+          />
         </div>
-        <Button variant="contained" color="success" >Create</Button>
-        <Button variant="outlined" color="error" type="button" onClick={handleReset}>
-          Reset fields
-        </Button>
+        <div className="bttn-field">
+          <Button size="small" variant="outlined" color="success">
+            Create
+          </Button>
+          <Button
+            size="small"
+            variant="outlined"
+            color="error"
+            type="button"
+            onClick={handleReset}
+          >
+            Reset fields
+          </Button>
+        </div>
       </form>
     </>
   );

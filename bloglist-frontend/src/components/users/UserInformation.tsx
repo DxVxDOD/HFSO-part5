@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { User } from "../../types/user";
+import { useEffect } from "react";
+import { initializeUsers } from "../../reducers/userArrayReducer";
 
 const UserInformation = () => {
   const users = useAppSelector((state) => state.userArray);
   const blogs = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(initializeUsers())
+  },[])
 
   return (
     <>

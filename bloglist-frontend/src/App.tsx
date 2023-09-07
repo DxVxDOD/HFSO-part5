@@ -21,18 +21,19 @@ import "@fontsource/roboto/700.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useMediaQuery } from "@mui/material";
+import NotLoggedIn from "./components/login/NotLoggedIn.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+          mode: prefersDarkMode ? "dark" : "light",
         },
       }),
     [prefersDarkMode],
@@ -57,22 +58,24 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <>
-        <h1>Blogs app</h1>
         <Notification />
         <Menu />
-        <Routes>
-          <Route path="/users/:id" element={<User />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/users" element={<UserInformation />} />
-          {user === null ? (
-            <>
-              <Route path="/blogs" element={<NotLoggedInBlogs />} />
-            </>
-          ) : (
-            <Route path="/blogs" element={<LoggedInBlogs />} />
-          )}
-          <Route path="/blog/:id" element={<Blog />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/login" element={<NotLoggedIn/>} />
+            <Route path="/users/:id" element={<User />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/users" element={<UserInformation />} />
+            {user === null ? (
+              <>
+                <Route path="/blogs" element={<NotLoggedInBlogs />} />
+              </>
+            ) : (
+              <Route path="/blogs" element={<LoggedInBlogs />} />
+            )}
+            <Route path="/blog/:id" element={<Blog />} />
+          </Routes>
+        </main>
       </>
     </ThemeProvider>
   );
