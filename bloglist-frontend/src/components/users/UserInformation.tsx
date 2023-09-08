@@ -4,6 +4,7 @@ import { User } from "../../types/user";
 import { useEffect } from "react";
 import { initializeUsers } from "../../reducers/userArrayReducer";
 import {
+  Box,
   Button,
   Paper,
   Table,
@@ -12,7 +13,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 
 const UserInformation = () => {
@@ -25,44 +25,50 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <Paper sx={{
-      padding: '1em',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: '2em',
-      alignItems: 'center',
-      margin: '2em',
-    }} >
-      <Typography component="h2" variant="h4">
-        Users
-      </Typography>
-      <TableContainer sx={{
-        width: '80%',
-        position: 'relative'
-      }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>User</TableCell>
-              <TableCell>Blog count</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user: User) => (
-              <TableRow key={user.username}>
-                <TableCell>
-                  <Button component={RouterLink} size="small" to={`/users/${user.id}`} state={{ user, blogs }}>
-                    {user.username}
-                  </Button>
-                </TableCell>
-                <TableCell>{user.blogs!.length}</TableCell>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: '2rem'
+      }}
+      component="article"
+    >
+      <Paper
+        sx={{
+          padding: "2rem",
+          minWidth: "75%",
+        }}
+      >
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>User</TableCell>
+                <TableCell>Blog count</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+            </TableHead>
+            <TableBody>
+              {users.map((user: User) => (
+                <TableRow key={user.username}>
+                  <TableCell>
+                    <Button
+                      component={RouterLink}
+                      size="small"
+                      to={`/users/${user.id}`}
+                      state={{ user, blogs }}
+                    >
+                      {user.username}
+                    </Button>
+                  </TableCell>
+                  <TableCell>{user.blogs!.length}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Box>
   );
 };
 

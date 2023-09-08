@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../app/hooks.js";
 import { dispalyError } from "../../reducers/notificationReducer.js";
 import { setUser } from "../../reducers/userReducer.js";
 import { useForm } from "../../hooks/useForm.js";
-import { Button, Paper, Stack, TextField } from "@mui/material";
+import { Box, Button, Paper, Stack, TextField } from "@mui/material";
 
 const LoginForm = () => {
   const { reset: usernameReset, ...username } = useForm("text");
@@ -36,47 +36,59 @@ const LoginForm = () => {
   };
 
   return (
-    <Paper
-      sx={{
-        padding: "1.5em",
-        display: "flex",
-        flexDirection: "column",
-        gap: '0.5em',
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      component="form"
-      onSubmit={handleLogin}
-    >
-      <Stack direction="column" spacing={2}>
-        <TextField
-          size="small"
-          required
-          autoFocus
-          color="success"
-          variant="standard"
-          label="Username"
-          {...username}
-        />
-        <TextField
-          size="small"
-          required
-          variant="standard"
-          label="Password"
-          color="success"
-          {...password}
-        />
-      </Stack>
-      <Button
-        color="success"
-        variant="outlined"
-        size="small"
-        id="login-button"
-        type="submit"
+    <Box sx={{
+      display:"flex",
+      flexDirection: 'column',
+      alignItems: "center",
+    }} component='section' >
+      <Paper
+        sx={{
+          padding: "1.5em",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1em",
+          marginTop: '2rem',
+          minWidth: "25.5%",
+          alignItems: 'center'
+        }}
+        component="form"
+        onSubmit={handleLogin}
       >
-        Login
-      </Button>
-    </Paper>
+        <Stack sx={{
+          minWidth: '75%'
+        }} direction="column" spacing={2}>
+          <TextField
+            size="small"
+            required
+            autoFocus
+            color="success"
+            variant="standard"
+            label="Username"
+            {...username}
+          />
+          <TextField
+            size="small"
+            required
+            variant="standard"
+            label="Password"
+            color="success"
+            {...password}
+          />
+        </Stack>
+        <Button
+        sx={{
+          width: 'fit-content'
+        }}
+          color="success"
+          variant="outlined"
+          size="small"
+          id="login-button"
+          type="submit"
+        >
+          Login
+        </Button>
+      </Paper>
+    </Box>
   );
 };
 

@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState, forwardRef, useImperativeHandle, ReactNode } from "react";
-import '../styles/loginPage.css'
 
 export type VisibilityHandle = {
   toggleVisibility: () => void;
@@ -25,15 +24,49 @@ const Togglable = forwardRef(
     });
 
     return (
-      <>
-        <div style={hideWhenVisible}>
-          <Button color="success" variant="outlined" size="small" onClick={toggleVisibility}>{buttonLabel}</Button>
-        </div>
-        <div style={showWhenVisible} className="togglableContent">
+      <Box component="section">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "1rem",
+          }}
+          style={hideWhenVisible}
+        >
+          <Button
+            color="success"
+            variant="outlined"
+            size="small"
+            onClick={toggleVisibility}
+          >
+            {buttonLabel}
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          style={showWhenVisible}
+          className="togglableContent"
+        >
           {children}
-          <Button color="secondary" className="cancel-bttn" variant="outlined" size="small" onClick={toggleVisibility}>Cancel</Button>
-        </div>
-      </>
+          <Button
+            sx={{
+              marginTop: "1rem",
+            }}
+            color="secondary"
+            className="cancel-bttn"
+            variant="outlined"
+            size="small"
+            onClick={toggleVisibility}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Box>
     );
   },
 );

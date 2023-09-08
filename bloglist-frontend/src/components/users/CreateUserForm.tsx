@@ -3,7 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import { useAppDispatch } from "../../app/hooks";
 import { createUsers } from "../../reducers/userArrayReducer";
 import { VisibilityHandle } from "../Togglable";
-import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
 
 const CreateUserForm = ({
   signUpRef,
@@ -37,12 +37,23 @@ const CreateUserForm = ({
   };
 
   return (
-    <Paper sx={{
-      padding: '1.5em',
-    }} >
-      <Typography variant="h5" component='h2' >Create an account</Typography>
-      <form className="from-field" onSubmit={handleSubmit}>
-        <Stack direction="column" spacing={2} >
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+      <Paper sx={{
+        display: 'flex',
+        padding: '2rem',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '2rem',
+        minWidth: '50%',
+        gap: '1rem'
+      }} component='form' className="from-field" onSubmit={handleSubmit}>
+        <Stack sx={{
+                    minWidth: '75%'
+        }} direction="column" spacing={2} >
           <TextField
             required
             size="small"
@@ -68,7 +79,11 @@ const CreateUserForm = ({
             {...password}
           />
         </Stack>
-        <Stack className="bttn-field">
+        <Stack sx={{
+          display: 'flex',
+          gap: '0.5rem',
+          width: 'fit-content',
+}} >
           <Button size="small" variant="outlined" color="success">
             Create
           </Button>
@@ -82,8 +97,8 @@ const CreateUserForm = ({
             Reset fields
           </Button>
         </Stack>
-      </form>
-    </Paper>
+      </Paper>
+    </Box>
   );
 };
 

@@ -1,6 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Button, ButtonGroup, Paper, Stack, Typography } from "@mui/material";
-import "../styles/header.css";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { useAppSelector } from "../app/hooks";
 
