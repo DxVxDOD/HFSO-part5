@@ -62,7 +62,7 @@ const App = () => {
         <Menu />
         <main>
           <Routes>
-            <Route path="/login" element={<NotLoggedIn/>} />
+            <Route path="/login" element={<NotLoggedIn />} />
             <Route path="/users/:id" element={<User />} />
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<UserInformation />} />

@@ -1,7 +1,16 @@
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Button, ButtonGroup, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { useAppSelector } from "../app/hooks";
+import useHeader from "../theme/Header";
 
 const Menu = () => {
   const handleLogout = () => {
@@ -11,39 +20,76 @@ const Menu = () => {
 
   const user = useAppSelector((state) => state.user);
 
+  const { classes } = useHeader();
+
   return (
-    <Paper component='header' sx={{
-      display: 'flex',
-      bgcolor: 'ghostwhite',
-      alignItems: 'center',
-      padding: '0.5em',
-      flexDirection: 'row',
-      marginBottom: '1em,'
-    }}>
-      <nav className="nav">
-        <Stack direction='column' >
-          <ButtonGroup variant="outlined" aria-label="alignment button group" >
-            <Button component={RouterLink} to={"/blogs"}>
+    <Paper
+      component="header"
+      sx={{
+        display: "flex",
+        width: "100%",
+        bgcolor: "ghostwhite",
+        alignItems: "center",
+        padding: "0.5em",
+      }}
+    >
+      <Box
+        component="nav"
+        sx={{
+          width: "33.33%",
+        }}
+      >
+        <Stack
+        className={classes.bttnStack}
+          sx={{
+            display: "flex",
+            marginLeft: "4rem",
+          }}
+          direction="column"
+        >
+          <ButtonGroup variant="outlined" aria-label="alignment button group">
+            <Button className={classes.button} component={RouterLink} to={"/blogs"}>
               Blogs
             </Button>
             {user === null ? null : (
-              <Button component={RouterLink} to={"/users"}>
+              <Button className={classes.button} component={RouterLink} to={"/users"}>
                 Users
               </Button>
             )}
-            <Button component={RouterLink} to={"/"}>
+            <Button className={classes.button} component={RouterLink} to={"/"}>
               Home
             </Button>
           </ButtonGroup>
         </Stack>
-      </nav>
-      <Typography color='black' className="logo" variant="h3" component="h1">
+      </Box>
+      <Typography
+      className={classes.h1}
+        sx={{
+          width: "33.33%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        color="black"
+        variant="h3"
+        component="h1"
+      >
         Blogs app
-        <NewspaperIcon fontSize="large" />
+        <NewspaperIcon fontSize="small" />
       </Typography>
       {user === null ? (
-        <Box className="bttn-container">
+        <Box
+        className={classes.bttnStack}
+          component="div"
+          sx={{
+            width: "33.33%",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "4rem",
+          }}
+        >
           <Button
+            className={classes.button}
             variant="outlined"
             color="success"
             component={RouterLink}
@@ -53,10 +99,18 @@ const Menu = () => {
           </Button>
         </Box>
       ) : (
-        <Box className="bttn-container">
+        <Box
+        className={classes.bttnStack}
+          sx={{
+            width: "33.33%",
+            display: "flex",
+            marginRight: "4rem",
+            justifyContent: "flex-end",
+          }}
+        >
           <Button
             size="small"
-            className="log-out"
+            className={classes.button}
             variant="contained"
             color="error"
             onClick={handleLogout}
