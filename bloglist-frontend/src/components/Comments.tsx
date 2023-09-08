@@ -4,7 +4,16 @@ import { useForm } from "../hooks/useForm";
 import { createComment } from "../reducers/commentReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../reducers/notificationReducer";
-import { Button, TextField } from "@mui/material";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import {
+  Button,
+  FormControl,
+  List,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const Comments = ({ blogId }: { blogId: string }) => {
   const comments = useAppSelector((state) => state.comments);
@@ -30,28 +39,56 @@ const Comments = ({ blogId }: { blogId: string }) => {
   };
 
   return (
-    <>
-      <h2>Comments</h2>
+    <Paper
+      component="aside"
+      sx={{
+        padding: "2rem",
+        minWidth: '75%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Typography component="h3" variant="h6">
+        Comments
+      </Typography>
       {comments.length < 1 ? (
         <span>Be the first to comment</span>
       ) : (
         <>
-          <ul>
+          <List>
             {comments
               .filter((comment) => comment.blogId === blogId)
               .map((comment) => (
-                <li key={comment.id}>{comment.content}</li>
+                <ListItemText key={comment.id}>{comment.content}</ListItemText>
               ))}
-          </ul>
+          </List>
         </>
       )}
-      <form onSubmit={handleComment}>
-        <TextField {...comment}
-        variant='standard'
-        label='Comment' />
-        <Button variant='outlined' >comment</Button>
-      </form>
-    </>
+      <FormControl sx={{
+        display: 'flex',
+        gap: '1rem',
+        flexDirection: 'column'
+      }} component='form' onSubmit={handleComment}>
+        <TextField
+          {...comment}
+          size="small"
+          fullWidth
+          variant="standard"
+          label="Comment"
+        />
+        <Button
+        sx={{
+          width: 'fit-content'
+        }}
+          startIcon={<SendOutlinedIcon />}
+          type="submit"
+          size="small"
+          variant="outlined"
+        >
+          Comment
+        </Button>
+      </FormControl>
+    </Paper>
   );
 };
 

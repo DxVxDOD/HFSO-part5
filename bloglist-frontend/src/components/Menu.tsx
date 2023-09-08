@@ -1,5 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
-import { AppBar, Box, Button, ButtonGroup, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, Paper, Stack, Typography } from "@mui/material";
 import "../styles/header.css";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { useAppSelector } from "../app/hooks";
@@ -13,12 +13,13 @@ const Menu = () => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <AppBar sx={{
+    <Paper component='header' sx={{
       display: 'flex',
       bgcolor: 'ghostwhite',
       alignItems: 'center',
       padding: '0.5em',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      marginBottom: '1em,'
     }}>
       <nav className="nav">
         <Stack direction='column' >
@@ -65,7 +66,7 @@ const Menu = () => {
           </Button>
         </Box>
       )}
-    </AppBar>
+    </Paper>
   );
 };
 

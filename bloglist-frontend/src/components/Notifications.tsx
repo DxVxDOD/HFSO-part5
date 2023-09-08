@@ -1,4 +1,4 @@
-import { Alert } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
 
 const Notification = () => {
@@ -7,9 +7,17 @@ const Notification = () => {
   if (message.status === null || !message.status) {
     return null;
   } else if (message.status === "success") {
-    return <Alert severity={message.status} >{message.value}</Alert>;
-  } else if (message.status === 'error') {
-    return <Alert severity={`${message.status}`} >{message.value}</Alert>;
+    return (
+      <Alert severity={message.status}>
+        <AlertTitle>Success</AlertTitle> {message.value}
+      </Alert>
+    );
+  } else if (message.status === "error") {
+    return (
+      <Alert severity={`${message.status}`}>
+        <AlertTitle>Error</AlertTitle> {message.value}
+      </Alert>
+    );
   }
 };
 

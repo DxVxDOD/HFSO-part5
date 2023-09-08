@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { User } from "../../types/user";
 import { useEffect } from "react";
 import { initializeUsers } from "../../reducers/userArrayReducer";
-import { Paper, Table, TableContainer, Typography } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
 const UserInformation = () => {
   const users = useAppSelector((state) => state.userArray);
@@ -15,33 +25,44 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <>
+    <Paper sx={{
+      padding: '1em',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '2em',
+      alignItems: 'center',
+      margin: '2em',
+    }} >
       <Typography component="h2" variant="h4">
         Users
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer sx={{
+        width: '80%',
+        position: 'relative'
+      }}>
         <Table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Blog count</th>
-            </tr>
-          </thead>
-          <tbody>
+          <TableHead>
+            <TableRow>
+              <TableCell>User</TableCell>
+              <TableCell>Blog count</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {users.map((user: User) => (
-              <tr key={user.username}>
-                <td>
-                  <Link to={`/users/${user.id}`} state={{ user, blogs }}>
+              <TableRow key={user.username}>
+                <TableCell>
+                  <Button component={RouterLink} size="small" to={`/users/${user.id}`} state={{ user, blogs }}>
                     {user.username}
-                  </Link>
-                </td>
-                <td>{user.blogs!.length}</td>
-              </tr>
+                  </Button>
+                </TableCell>
+                <TableCell>{user.blogs!.length}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
+          </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Paper>
   );
 };
 
