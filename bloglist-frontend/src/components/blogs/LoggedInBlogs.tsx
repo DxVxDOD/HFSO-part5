@@ -7,6 +7,7 @@ import Togglable, { VisibilityHandle } from "../Togglable.js";
 import {
   Box,
   List,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   Paper,
@@ -29,6 +30,7 @@ const LoggedInBlogs = () => {
       <List
         sx={{
           marginTop: "2rem",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           gap: "2rem",
@@ -43,7 +45,7 @@ const LoggedInBlogs = () => {
           <Paper
             sx={{
               padding: "1rem",
-              width: "75%",
+              minWidth: "75%",
             }}
           >
             <Typography className={classes.h2} variant="h5" component="h2">
@@ -54,8 +56,48 @@ const LoggedInBlogs = () => {
                 .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
                 .filter((blog: BlogT) => blog.user.username === user.username)
                 .map((blog: BlogT) => (
+                  <ListItem key={blog.id}>
+                    <ListItemButton
+                      component={RouterLink}
+                      to={`/blog/${blog.id}`}
+                      state={blog}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                        className={classes.icon}
+                      >
+                        <ArticleIcon fontSize="small" />
+                      </ListItemIcon>
+                      <Typography className={classes.listItem}>
+                        {blog.title} by {blog.author}
+                      </Typography>
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+            </List>
+          </Paper>
+        )}
+        <Paper
+          sx={{
+            display: "flex",
+            padding: "1rem",
+            width: "75%",
+            flexDirection: "column",
+          }}
+        >
+          <Typography className={classes.h2} variant="h5" component="h2">
+            Other blogs
+          </Typography>
+          <List>
+            {[...blogs]
+              .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
+              .filter((blog: BlogT) => blog.user.username !== user.username)
+              .map((blog: BlogT) => (
+                <ListItem key={blog.id}>
                   <ListItemButton
-                    key={blog.id}
                     component={RouterLink}
                     to={`/blog/${blog.id}`}
                     state={blog}
@@ -73,45 +115,7 @@ const LoggedInBlogs = () => {
                       {blog.title} by {blog.author}
                     </Typography>
                   </ListItemButton>
-                ))}
-            </List>
-          </Paper>
-        )}
-        <Paper
-          sx={{
-            display: "flex",
-            padding: "1rem",
-            minWidth: "75%",
-            flexDirection: "column",
-          }}
-        >
-          <Typography className={classes.h2} variant="h5" component="h2">
-            Other blogs
-          </Typography>
-          <List>
-            {[...blogs]
-              .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
-              .filter((blog: BlogT) => blog.user.username !== user.username)
-              .map((blog: BlogT) => (
-                <ListItemButton
-                  key={blog.id}
-                  component={RouterLink}
-                  to={`/blog/${blog.id}`}
-                  state={blog}
-                >
-                  <ListItemIcon
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                    className={classes.icon}
-                  >
-                    <ArticleIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Typography className={classes.listItem}>
-                    {blog.title} by {blog.author}
-                  </Typography>
-                </ListItemButton>
+                </ListItem>
               ))}
           </List>
         </Paper>

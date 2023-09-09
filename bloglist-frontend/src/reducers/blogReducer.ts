@@ -17,10 +17,16 @@ const slice = createSlice({
     create(state, action) {
       state.push(action.payload);
     },
+    like(state, action) {
+      const blog = action.payload;
+      const blogToUpdate = state.find((state) => state.id === blog.id)!;
+      const updated = { ...blogToUpdate, likes: blogToUpdate?.likes! + 1 };
+      return state.map((s) => (s.id === blog ? updated : s));
+    },
   },
 });
 
-const { set, create } = slice.actions;
+const { set, create, like } = slice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async (dispatch) => {
@@ -34,19 +40,19 @@ export const createBlog = (blog: BlogT): AppThunk => {
     const newBlog = await blogService.create(blog);
     dispatch(create(newBlog));
     dispatch(
-      dispalySuccess(`New blog: ${newBlog.title} by ${newBlog.author}`, 5000),
+      dispalySuccess(`New blog: ${newBlog.title} by ${newBlog.author}!`, 5000),
     );
   };
 };
 
-export const addUpdatedBlog = (blog: BlogT, id: string): AppThunk => {
+export const addUpdatedBlog = (blog: BlogT): AppThunk => {
   return async (dispatch) => {
-    const updatingBlog = { ...blog, likes: blog.likes! + 1 };
-    const upToDateBlog = await blogService.update(id, updatingBlog);
-    dispatch(initializeBlogs());
+    const updatedBlog = { ...blog, likes: blog.likes! + 1 };
+    const response = await blogService.update(updatedBlog.id!, updatedBlog);
+    dispatch(like(response));
     dispatch(
       dispalySuccess(
-        `New blog: ${upToDateBlog.title} by ${upToDateBlog.author}`,
+        `${response.title} by ${response.author} has been updated!`,
         5000,
       ),
     );

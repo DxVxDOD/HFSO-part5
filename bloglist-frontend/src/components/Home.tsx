@@ -4,17 +4,18 @@ import { BlogT } from "../types/blog";
 import {
   Box,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   Paper,
   Typography,
 } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
+import blogList from "../theme/BlogList";
 
 const Home = () => {
   const user = useAppSelector((state) => state.user);
   const blogs = useAppSelector((state) => state.blog);
+  const { classes } = blogList();
 
   return (
     <Box
@@ -35,31 +36,52 @@ const Home = () => {
           <Typography>Proper home page</Typography>
         ) : (
           <>
-            <article>
-              <Typography component="h2" variant="h5">
-                <strong> {user.username} is logged in</strong>
+            <Box
+              sx={{
+                gap: "1rem",
+                display: "flex",
+                flexDirection: "column",
+              }}
+              component="article"
+            >
+              <Typography className={classes.h2} component="h2" variant="h5">
+                <Paper
+                  sx={{
+                    display: "flex",
+                    padding: "1rem",
+                    justifyContent: "center",
+                  }}
+                >
+                  <strong> {user.username} is logged in</strong>
+                </Paper>
               </Typography>
-              <Typography component="h3" variant="h6">
+              <Typography className={classes.h3} component="h3" variant="h6">
                 My blogs:
               </Typography>
-            </article>
+            </Box>
             <List>
               {[...blogs]
                 .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
                 .filter((blog: BlogT) => blog.user.username === user.username)
                 .map((blog: BlogT) => (
-                  <ListItem key={blog.id}>
-                    <ListItemButton
-                      to={`/blog/${blog.id}`}
-                      component={RouterLink}
-                      state={blog}
+                  <ListItemButton
+                    key={blog.id}
+                    to={`/blog/${blog.id}`}
+                    component={RouterLink}
+                    state={blog}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
                     >
-                      <ListItemIcon>
-                        <ArticleIcon />
-                      </ListItemIcon>
+                      <ArticleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Typography className={classes.otherTxt}>
                       {blog.title} by {blog.author}
-                    </ListItemButton>
-                  </ListItem>
+                    </Typography>
+                  </ListItemButton>
                 ))}
             </List>
           </>

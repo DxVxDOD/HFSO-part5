@@ -24,6 +24,7 @@ const slice = createSlice({
     },
     clear(state, action: PayloadAction<null>) {
       state.value = action.payload;
+      return state;
     },
   },
 });

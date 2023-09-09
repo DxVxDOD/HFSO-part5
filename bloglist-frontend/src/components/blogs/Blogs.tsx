@@ -27,11 +27,14 @@ const Blog = () => {
   const { state } = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const blogs = useAppSelector((state) => state.blog);
   const { classes } = useBlog();
 
   const updateLikes = async () => {
     try {
-      dispatch(addUpdatedBlog(state, state.id!));
+      const blogToUpdate = blogs.filter((blog) => blog.id === state.id);
+      console.log("BTUD", blogToUpdate);
+      dispatch(addUpdatedBlog(blogToUpdate[0]));
       dispatch(initializeBlogs());
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
