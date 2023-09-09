@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 import { dispalyError } from "../reducers/notificationReducer";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import {
+  Box,
   Button,
   FormControl,
   List,
@@ -14,11 +15,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useBlog from "../theme/Blog";
 
 const Comments = ({ blogId }: { blogId: string }) => {
   const comments = useAppSelector((state) => state.comments);
   const dispatch = useAppDispatch();
 
+  const { classes } = useBlog();
   const { reset: resetComment, ...comment } = useForm("text");
 
   const handleComment = (e: FormEvent) => {
@@ -39,56 +42,75 @@ const Comments = ({ blogId }: { blogId: string }) => {
   };
 
   return (
-    <Paper
-      component="aside"
+    <Box
       sx={{
-        padding: "2rem",
-        minWidth: '75%',
-        display: 'flex',
-        flexDirection: 'column'
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
       }}
     >
-      <Typography component="h3" variant="h6">
-        Comments
-      </Typography>
-      {comments.length < 1 ? (
-        <span>Be the first to comment</span>
-      ) : (
-        <>
-          <List>
-            {comments
-              .filter((comment) => comment.blogId === blogId)
-              .map((comment) => (
-                <ListItemText key={comment.id}>{comment.content}</ListItemText>
-              ))}
-          </List>
-        </>
-      )}
-      <FormControl sx={{
-        display: 'flex',
-        gap: '1rem',
-        flexDirection: 'column'
-      }} component='form' onSubmit={handleComment}>
-        <TextField
-          {...comment}
-          size="small"
-          fullWidth
-          variant="standard"
-          label="Comment"
-        />
-        <Button
+      <Paper
+        component="aside"
         sx={{
-          width: 'fit-content'
+          padding: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "75%",
+          minWidth: "75%",
         }}
-          startIcon={<SendOutlinedIcon />}
-          type="submit"
-          size="small"
-          variant="outlined"
+      >
+        <Typography className={classes.title} component="h3" variant="h5">
+          Comments
+        </Typography>
+        {comments.length < 1 ? (
+          <span>Be the first to comment</span>
+        ) : (
+          <>
+            <List>
+              {comments
+                .filter((comment) => comment.blogId === blogId)
+                .map((comment) => (
+                  <ListItemText key={comment.id}>
+                    <Typography className={classes.otherTxt}>
+                      {comment.content}
+                    </Typography>
+                  </ListItemText>
+                ))}
+            </List>
+          </>
+        )}
+        <FormControl
+          sx={{
+            display: "flex",
+            gap: "1rem",
+            flexDirection: "column",
+          }}
+          component="form"
+          onSubmit={handleComment}
         >
-          Comment
-        </Button>
-      </FormControl>
-    </Paper>
+          <TextField
+            className={classes.otherTxt}
+            {...comment}
+            size="small"
+            fullWidth
+            variant="standard"
+            label="Comment"
+          />
+          <Button
+            className={classes.button}
+            sx={{
+              width: "fit-content",
+            }}
+            startIcon={<SendOutlinedIcon />}
+            type="submit"
+            size="small"
+            variant="outlined"
+          >
+            Comment
+          </Button>
+        </FormControl>
+      </Paper>
+    </Box>
   );
 };
 

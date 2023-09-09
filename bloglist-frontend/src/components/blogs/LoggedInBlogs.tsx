@@ -14,17 +14,19 @@ import {
   Typography,
 } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
+import blogList from "../../theme/BlogList.js";
 
 const LoggedInBlogs = () => {
   const blogs = useAppSelector((state) => state.blog);
   const user = useAppSelector((state) => state.user);
 
   const blogFormRef = useRef<VisibilityHandle>();
+  const { classes } = blogList();
 
   // need to fix liking of the blogs
 
   return (
-    <Box component='section' >
+    <Box component="section">
       <List
         sx={{
           marginTop: "2rem",
@@ -42,10 +44,10 @@ const LoggedInBlogs = () => {
           <Paper
             sx={{
               padding: "1rem",
-              minWidth: '75%',
+              width: "75%",
             }}
           >
-            <Typography variant="h5" component="h2">
+            <Typography className={classes.h2} variant="h5" component="h2">
               {user.username}s blogs
             </Typography>
             <List>
@@ -53,29 +55,38 @@ const LoggedInBlogs = () => {
                 .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
                 .filter((blog: BlogT) => blog.user.username === user.username)
                 .map((blog: BlogT) => (
-                  <ListItem key={blog.id}>
-                    <ListItemButton
-                      component={RouterLink}
-                      to={`/blog/${blog.id}`}
-                      state={blog}
+                  <ListItemButton
+                    key={blog.id}
+                    component={RouterLink}
+                    to={`/blog/${blog.id}`}
+                    state={blog}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                      className={classes.icon}
                     >
-                      <ListItemIcon>
-                        <ArticleIcon />
-                      </ListItemIcon>
+                      <ArticleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Typography className={classes.listItem}>
                       {blog.title} by {blog.author}
-                    </ListItemButton>
-                  </ListItem>
+                    </Typography>
+                  </ListItemButton>
                 ))}
             </List>
           </Paper>
         )}
         <Paper
           sx={{
+            display: "flex",
             padding: "1rem",
-            minWidth: '75%'
+            minWidth: "75%",
+            flexDirection: "column",
           }}
         >
-          <Typography variant="h5" component="h2">
+          <Typography className={classes.h2} variant="h5" component="h2">
             Other blogs
           </Typography>
           <List>
@@ -83,18 +94,25 @@ const LoggedInBlogs = () => {
               .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
               .filter((blog: BlogT) => blog.user.username !== user.username)
               .map((blog: BlogT) => (
-                <ListItem key={blog.id}>
-                  <ListItemButton
-                    component={RouterLink}
-                    to={`/blog/${blog.id}`}
-                    state={blog}
+                <ListItemButton
+                  key={blog.id}
+                  component={RouterLink}
+                  to={`/blog/${blog.id}`}
+                  state={blog}
+                >
+                  <ListItemIcon
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    className={classes.icon}
                   >
-                    <ListItemIcon>
-                      <ArticleIcon />
-                    </ListItemIcon>
+                    <ArticleIcon fontSize="small" />
+                  </ListItemIcon>
+                  <Typography>
                     {blog.title} by {blog.author}
-                  </ListItemButton>
-                </ListItem>
+                  </Typography>
+                </ListItemButton>
               ))}
           </List>
         </Paper>

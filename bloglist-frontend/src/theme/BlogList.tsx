@@ -1,23 +1,26 @@
 import { makeStyles } from "tss-react/mui";
 
-const useHeader = makeStyles()((theme) => {
+const blogList = makeStyles()((theme) => {
   return {
-    button: {
+    h2: {
       [theme.breakpoints.down("sm")]: {
-        fontSize: "0.6rem",
+        fontSize: "1.2rem",
       },
     },
-    h1: {
+    listItem: {
       [theme.breakpoints.down("sm")]: {
         fontSize: "1rem",
+        padding: 0,
+        margin: "0",
       },
     },
-    bttnStack: {
+    icon: {
       [theme.breakpoints.down("sm")]: {
+        padding: 0,
         margin: 0,
       },
     },
   };
 });
 
-export default useHeader;
+export default blogList;

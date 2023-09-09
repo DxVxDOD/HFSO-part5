@@ -36,27 +36,27 @@ const LoginForm = () => {
   };
 
   return (
-    <Box sx={{
-      display:"flex",
-      flexDirection: 'column',
-      alignItems: "center",
-    }} component='section' >
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+      component="section"
+    >
       <Paper
         sx={{
           padding: "1.5em",
           display: "flex",
           flexDirection: "column",
           gap: "1em",
-          marginTop: '2rem',
-          minWidth: "25.5%",
-          alignItems: 'center'
+          marginTop: "2rem",
+          alignItems: "center",
         }}
         component="form"
         onSubmit={handleLogin}
       >
-        <Stack sx={{
-          minWidth: '75%'
-        }} direction="column" spacing={2}>
+        <Stack direction="column" spacing={2}>
           <TextField
             size="small"
             required
@@ -76,9 +76,9 @@ const LoginForm = () => {
           />
         </Stack>
         <Button
-        sx={{
-          width: 'fit-content'
-        }}
+          sx={{
+            width: "fit-content",
+          }}
           color="success"
           variant="outlined"
           size="small"

@@ -5,7 +5,9 @@ import { createBlog, initializeBlogs } from "../../reducers/blogReducer";
 import { AxiosError } from "axios";
 import { dispalyError } from "../../reducers/notificationReducer";
 import { useForm } from "../../hooks/useForm";
-import { Button, Paper, Stack, TextField } from "@mui/material";
+import { Box, Button, Paper, Stack, TextField } from "@mui/material";
+import blogList from "../../theme/BlogList";
+import useBlog from "../../theme/Blog";
 
 const BlogsForm = ({
   blogFormRef,
@@ -16,6 +18,7 @@ const BlogsForm = ({
   const { reset: resetTitle, ...title } = useForm("text");
   const { reset: resetUrl, ...url } = useForm("text");
 
+  const { classes } = useBlog();
   const dispatch = useAppDispatch();
 
   const handleNewBlog = async (e: FormEvent) => {
@@ -43,11 +46,32 @@ const BlogsForm = ({
   };
 
   return (
-    <Paper sx={{
-      padding: '2em'
-    }} >
-      <form onSubmit={handleNewBlog}>
-        <Stack direction="column" spacing={2}>
+    <Paper
+      sx={{
+        padding: "2em",
+        minWidth: "75%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+        onSubmit={handleNewBlog}
+      >
+        <Stack
+          sx={{
+            width: "100%",
+          }}
+          direction="column"
+          spacing={2}
+        >
           <TextField
             required
             size="small"
@@ -76,10 +100,18 @@ const BlogsForm = ({
             {...url}
           />
         </Stack>
-        <Button type="submit" color="success" variant="outlined" size="small">
+        <Button
+          sx={{
+            width: "fit-content",
+          }}
+          type="submit"
+          color="success"
+          variant="outlined"
+          size="small"
+        >
           Add blog
         </Button>
-      </form>
+      </Box>
     </Paper>
   );
 };

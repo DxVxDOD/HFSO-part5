@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  IconButton,
   Paper,
   Stack,
   Typography,
@@ -28,7 +27,7 @@ const Menu = () => {
       sx={{
         display: "flex",
         width: "100%",
-        bgcolor: "ghostwhite",
+        bgcolor: "#2E3033",
         alignItems: "center",
         padding: "0.5em",
       }}
@@ -40,7 +39,7 @@ const Menu = () => {
         }}
       >
         <Stack
-        className={classes.bttnStack}
+          className={classes.bttnStack}
           sx={{
             display: "flex",
             marginLeft: "4rem",
@@ -48,11 +47,19 @@ const Menu = () => {
           direction="column"
         >
           <ButtonGroup variant="outlined" aria-label="alignment button group">
-            <Button className={classes.button} component={RouterLink} to={"/blogs"}>
+            <Button
+              className={classes.button}
+              component={RouterLink}
+              to={"/blogs"}
+            >
               Blogs
             </Button>
             {user === null ? null : (
-              <Button className={classes.button} component={RouterLink} to={"/users"}>
+              <Button
+                className={classes.button}
+                component={RouterLink}
+                to={"/users"}
+              >
                 Users
               </Button>
             )}
@@ -63,11 +70,12 @@ const Menu = () => {
         </Stack>
       </Box>
       <Typography
-      className={classes.h1}
+        className={classes.h1}
         sx={{
           width: "33.33%",
           display: "flex",
           justifyContent: "center",
+          color: "#BFC8D6",
           alignItems: "center",
         }}
         color="black"
@@ -79,7 +87,7 @@ const Menu = () => {
       </Typography>
       {user === null ? (
         <Box
-        className={classes.bttnStack}
+          className={classes.bttnStack}
           component="div"
           sx={{
             width: "33.33%",
@@ -100,11 +108,11 @@ const Menu = () => {
         </Box>
       ) : (
         <Box
-        className={classes.bttnStack}
+          className={classes.bttnStack}
           sx={{
             width: "33.33%",
             display: "flex",
-            marginRight: "4rem",
+
             justifyContent: "flex-end",
           }}
         >

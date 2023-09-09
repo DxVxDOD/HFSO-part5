@@ -24,13 +24,20 @@ const Togglable = forwardRef(
     });
 
     return (
-      <Box component="section">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          marginTop: "2rem",
+        }}
+        component="section"
+      >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "1rem",
           }}
           style={hideWhenVisible}
         >

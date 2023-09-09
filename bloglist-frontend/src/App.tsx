@@ -27,13 +27,17 @@ const App = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode: prefersDarkMode ? "dark" : "light",
+          background: {
+            default: "#43464B",
+            paper: "#2D3033",
+          },
         },
       }),
     [prefersDarkMode],
