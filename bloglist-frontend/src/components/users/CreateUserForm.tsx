@@ -3,14 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import { useAppDispatch } from "../../app/hooks";
 import { createUsers } from "../../reducers/userArrayReducer";
 import { VisibilityHandle } from "../Togglable";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Stack, TextField } from "@mui/material";
 
 const CreateUserForm = ({
   signUpRef,

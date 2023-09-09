@@ -7,7 +7,6 @@ import Togglable, { VisibilityHandle } from "../Togglable.js";
 import {
   Box,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   Paper,
@@ -109,7 +108,7 @@ const LoggedInBlogs = () => {
                   >
                     <ArticleIcon fontSize="small" />
                   </ListItemIcon>
-                  <Typography>
+                  <Typography className={classes.listItem}>
                     {blog.title} by {blog.author}
                   </Typography>
                 </ListItemButton>

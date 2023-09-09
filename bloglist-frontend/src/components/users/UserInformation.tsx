@@ -14,11 +14,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import useBlog from "../../theme/Blog";
 
 const UserInformation = () => {
   const users = useAppSelector((state) => state.userArray);
   const blogs = useAppSelector((state) => state.blog);
   const dispatch = useAppDispatch();
+  const { classes } = useBlog();
 
   useEffect(() => {
     dispatch(initializeUsers());
@@ -30,7 +32,7 @@ const UserInformation = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: '2rem'
+        marginTop: "2rem",
       }}
       component="article"
     >
@@ -44,8 +46,8 @@ const UserInformation = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>User</TableCell>
-                <TableCell>Blog count</TableCell>
+                <TableCell className={classes.title}>User</TableCell>
+                <TableCell className={classes.title}>Blog count</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -53,6 +55,7 @@ const UserInformation = () => {
                 <TableRow key={user.username}>
                   <TableCell>
                     <Button
+                      className={classes.button}
                       component={RouterLink}
                       size="small"
                       to={`/users/${user.id}`}

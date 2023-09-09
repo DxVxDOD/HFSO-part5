@@ -6,8 +6,6 @@ import { AxiosError } from "axios";
 import { dispalyError } from "../../reducers/notificationReducer";
 import { useForm } from "../../hooks/useForm";
 import { Box, Button, Paper, Stack, TextField } from "@mui/material";
-import blogList from "../../theme/BlogList";
-import useBlog from "../../theme/Blog";
 
 const BlogsForm = ({
   blogFormRef,
@@ -18,7 +16,6 @@ const BlogsForm = ({
   const { reset: resetTitle, ...title } = useForm("text");
   const { reset: resetUrl, ...url } = useForm("text");
 
-  const { classes } = useBlog();
   const dispatch = useAppDispatch();
 
   const handleNewBlog = async (e: FormEvent) => {

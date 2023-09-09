@@ -13,7 +13,6 @@ import ArticleIcon from "@mui/icons-material/Article";
 
 const User = () => {
   const { state } = useLocation();
-  console.log(state);
 
   return (
     <Box
