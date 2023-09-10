@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addUpdatedBlog,
-  initializeBlogs,
   deleteBlog,
+  initializeBlogs,
 } from "../../reducers/blogReducer";
 import { AxiosError } from "axios";
 import {
@@ -22,6 +22,7 @@ import {
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import useBlog from "../../theme/Blog";
+import { useEffect } from "react";
 
 const Blog = () => {
   const { state } = useLocation();
@@ -29,13 +30,18 @@ const Blog = () => {
   const user = useAppSelector((state) => state.user);
   const blogs = useAppSelector((state) => state.blog);
   const { classes } = useBlog();
+  const blog = blogs.filter((blog) => blog.id === state.id)[0];
+  console.log("blog", blog);
+  console.log("blogsArray", blogs);
+  console.log("state", state);
+
+  useEffect(() => {
+    dispatch(initializeBlogs());
+  }, []);
 
   const updateLikes = async () => {
     try {
-      const blogToUpdate = blogs.filter((blog) => blog.id === state.id);
-      console.log("BTUD", blogToUpdate);
-      dispatch(addUpdatedBlog(blogToUpdate[0]));
-      dispatch(initializeBlogs());
+      dispatch(addUpdatedBlog(blog));
     } catch (exception: unknown) {
       if (exception instanceof AxiosError && exception.response) {
         dispatch(dispalyError(exception.response.data.error, 5000));
@@ -44,10 +50,10 @@ const Blog = () => {
   };
 
   const removeBlog = async () => {
-    if (state && window.confirm(`Would you like to remove ${state.title} ?`)) {
+    if (blog && window.confirm(`Would you like to remove ${blog.title} ?`)) {
       try {
-        dispatch(deleteBlog(state.id!));
-        dispatch(dispalySuccess(`${state.title} has been removed`, 5000));
+        dispatch(deleteBlog(blog.id!));
+        dispatch(dispalySuccess(`${blog.title} has been removed`, 5000));
       } catch (exception: unknown) {
         if (exception instanceof AxiosError && exception.response) {
           dispatch(dispalyError(exception.response.data.error, 5000));
@@ -79,28 +85,28 @@ const Blog = () => {
       >
         <Box component="section">
           <Typography className={classes.title} component="h2" variant="h5">
-            Title: {state.title}
+            Title: {blog.title}
           </Typography>
           <Typography className={classes.author} component="h3" variant="h5">
-            Author: {state.author}
+            Author: {blog.author}
           </Typography>
         </Box>
-        <Link href={state.url}>
+        <Link href={blog.url}>
           <Typography className={classes.otherTxt}>
-            \\ {state.title} \\
+            \\ {blog.title} \\
           </Typography>
         </Link>
         <Typography className={classes.otherTxt} component="p">
-          {state.user.username}
+          {blog.user.username}
         </Typography>
         {user === null ? (
           <Typography className={classes.otherTxt} component="p" id="likes">
-            Likes: {state.likes}
+            Likes: {blog.likes}
           </Typography>
         ) : (
           <>
             <Typography className={classes.otherTxt}>
-              Likes: {state.likes}
+              Likes: {blog.likes}
             </Typography>
 
             <ButtonGroup aria-label="alignment button group" size="small">
@@ -125,7 +131,7 @@ const Blog = () => {
           </>
         )}
       </Paper>
-      <Comments blogId={`${state.id}`} />
+      <Comments blogId={`${blog.id}`} />
     </Box>
   );
 };

@@ -21,7 +21,7 @@ const slice = createSlice({
       const blog = action.payload;
       const blogToUpdate = state.find((state) => state.id === blog.id)!;
       const updated = { ...blogToUpdate, likes: blogToUpdate?.likes! + 1 };
-      return state.map((s) => (s.id === blog ? updated : s));
+      return state.map((s) => (s.id === updated.id ? updated : s));
     },
   },
 });
@@ -49,6 +49,7 @@ export const addUpdatedBlog = (blog: BlogT): AppThunk => {
   return async (dispatch) => {
     const updatedBlog = { ...blog, likes: blog.likes! + 1 };
     const response = await blogService.update(updatedBlog.id!, updatedBlog);
+
     dispatch(like(response));
     dispatch(
       dispalySuccess(
