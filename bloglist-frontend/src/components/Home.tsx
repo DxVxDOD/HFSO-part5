@@ -57,6 +57,10 @@ const Home = () => {
               .filter((blog: BlogT) => blog.user.username === user.username)
               .map((blog: BlogT) => (
                 <Button
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
                   key={blog.id}
                   to={`/blog/${blog.id}`}
                   component={RouterLink}

@@ -1,6 +1,6 @@
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { BlogT } from "../../types/blog";
-import { Box, Button, ListItemIcon, Paper, Typography } from "@mui/material";
+import { Box, Button, Icon, Paper, Typography } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
 
 const User = () => {
@@ -35,14 +35,22 @@ const User = () => {
             .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
             .map((blog: BlogT) => (
               <Button
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                }}
                 key={blog.id}
                 component={RouterLink}
                 to={`/blog/${blog.id}`}
                 state={blog}
               >
-                <ListItemIcon>
-                  <ArticleIcon />
-                </ListItemIcon>
+                <Icon>
+                  <ArticleIcon
+                    sx={{
+                      display: "flex",
+                    }}
+                  />
+                </Icon>
                 {blog.title}
               </Button>
             ))

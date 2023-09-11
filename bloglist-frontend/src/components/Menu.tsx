@@ -82,7 +82,7 @@ const Menu = () => {
         variant="h3"
         component="h1"
       >
-        Marks
+        Blogs
         <NewspaperIcon fontSize="inherit" />
       </Typography>
       {user === null ? (

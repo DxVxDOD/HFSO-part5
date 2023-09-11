@@ -71,9 +71,7 @@ const NotLoggedInBlogs = () => {
                   >
                     <ArticleIcon fontSize="small" />
                   </Icon>
-                  <Typography>
-                    {blog.title} by {blog.author}
-                  </Typography>
+                  <Typography>{blog.title}</Typography>
                 </Button>
               ))}
           </Box>

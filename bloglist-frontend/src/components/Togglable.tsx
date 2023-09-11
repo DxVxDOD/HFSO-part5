@@ -64,7 +64,7 @@ const Togglable = forwardRef(
           <Button
             aria-label="cancel button"
             sx={{
-              marginTop: "1rem",
+              marginY: "1rem",
             }}
             color="secondary"
             variant="outlined"

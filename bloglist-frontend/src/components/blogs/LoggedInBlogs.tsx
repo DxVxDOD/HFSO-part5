@@ -4,7 +4,7 @@ import { BlogT } from "../../types/blog.js";
 import { useRef } from "react";
 import BlogsForm from "../blogs/BlogsForm.js";
 import Togglable, { VisibilityHandle } from "../Togglable.js";
-import { Box, Button, Icon, List, Paper, Typography } from "@mui/material";
+import { Box, Button, Icon, Paper, Typography } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
 import blogList from "../../theme/BlogList.js";
 
@@ -24,8 +24,8 @@ const LoggedInBlogs = () => {
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          gap: "2rem",
           alignItems: "center",
+          gap: "2rem",
         }}
       >
         {blogs.length < 1 ? (
@@ -36,17 +36,18 @@ const LoggedInBlogs = () => {
           <Paper
             sx={{
               padding: "1rem",
-              minWidth: "75%",
+              width: "75%",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <Typography className={classes.h2} variant="h5" component="h2">
-              {user.username} marks
+              {user.username} blogs
             </Typography>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start",
               }}
               component="nav"
             >
@@ -58,24 +59,24 @@ const LoggedInBlogs = () => {
                     aria-label="button to access blogs"
                     sx={{
                       marginLeft: "2rem",
+                      display: "flex",
+                      justifyContent: "flex-start",
                     }}
                     key={blog.id}
                     component={RouterLink}
                     to={`/blog/${blog.id}`}
                     state={blog}
                   >
-                    <Icon
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                      }}
-                      className={classes.icon}
-                    >
-                      <ArticleIcon fontSize="small" />
+                    <Icon className={classes.icon}>
+                      <ArticleIcon
+                        sx={{
+                          display: "flex",
+                        }}
+                        fontSize="small"
+                      />
                     </Icon>
                     <Typography className={classes.listItem}>
-                      {blog.title} by {blog.author}
+                      {blog.title}
                     </Typography>
                   </Button>
                 ))}
@@ -97,7 +98,6 @@ const LoggedInBlogs = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
             }}
             component="nav"
           >
@@ -109,24 +109,24 @@ const LoggedInBlogs = () => {
                   aria-label="button to access blogs"
                   sx={{
                     marginLeft: "2rem",
+                    display: "flex",
+                    justifyContent: "flex-start",
                   }}
                   key={blog.id}
                   component={RouterLink}
                   to={`/blog/${blog.id}`}
                   state={blog}
                 >
-                  <Icon
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                    }}
-                    className={classes.icon}
-                  >
-                    <ArticleIcon fontSize="small" />
+                  <Icon className={classes.icon}>
+                    <ArticleIcon
+                      sx={{
+                        display: "flex",
+                      }}
+                      fontSize="small"
+                    />
                   </Icon>
                   <Typography className={classes.listItem}>
-                    {blog.title} by {blog.author}
+                    {blog.title}
                   </Typography>
                 </Button>
               ))}
