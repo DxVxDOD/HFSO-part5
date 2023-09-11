@@ -42,6 +42,7 @@ const Togglable = forwardRef(
           style={hideWhenVisible}
         >
           <Button
+            aria-label={`${buttonLabel} button`}
             color="success"
             variant="outlined"
             size="small"
@@ -61,11 +62,11 @@ const Togglable = forwardRef(
         >
           {children}
           <Button
+            aria-label="cancel button"
             sx={{
               marginTop: "1rem",
             }}
             color="secondary"
-            className="cancel-bttn"
             variant="outlined"
             size="small"
             onClick={toggleVisibility}

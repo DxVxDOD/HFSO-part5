@@ -98,10 +98,17 @@ const CreateUserForm = ({
             width: "fit-content",
           }}
         >
-          <Button size="small" variant="outlined" color="success">
+          <Button
+            type="submit"
+            aria-label="create user button"
+            size="small"
+            variant="outlined"
+            color="success"
+          >
             Create
           </Button>
           <Button
+            aria-label="reset button"
             size="small"
             variant="outlined"
             color="error"

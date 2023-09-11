@@ -63,7 +63,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
           Comments
         </Typography>
         {comments.length < 1 ? (
-          <span>Be the first to comment</span>
+          <Typography>Be the first to comment</Typography>
         ) : (
           <>
             <List>
@@ -97,6 +97,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
             label="Comment"
           />
           <Button
+            aria-label="submit button"
             className={classes.button}
             sx={{
               width: "fit-content",

@@ -76,6 +76,7 @@ const LoginForm = () => {
           />
         </Stack>
         <Button
+          aria-label="login button"
           sx={{
             width: "fit-content",
           }}

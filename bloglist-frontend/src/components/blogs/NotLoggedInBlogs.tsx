@@ -1,14 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks.js";
 import ArticleIcon from "@mui/icons-material/Article";
-import {
-  Box,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Icon, Paper, Typography } from "@mui/material";
 import blogList from "../../theme/BlogList.js";
 
 const NotLoggedInBlogs = () => {
@@ -35,7 +28,7 @@ const NotLoggedInBlogs = () => {
             minWidth: "75%",
             maxWidth: "75%",
             display: "flex",
-            gap: "2rem",
+            gap: "1rem",
             flexDirection: "column",
           }}
           component="section"
@@ -43,32 +36,47 @@ const NotLoggedInBlogs = () => {
           <Typography className={classes.h2} component="h3" variant="h5">
             Featured blogs
           </Typography>
-          <List
+          <Box
+            component="nav"
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: "1rem",
+              alignItems: "flex-start",
+              gap: {
+                xs: "1rem",
+              },
             }}
           >
             {[...blogs]
               .sort((a, b) => b.likes! - a.likes!)
               .map((blog) => (
-                <ListItemButton
+                <Button
+                  aria-label="button to access blogs"
+                  sx={{
+                    marginLeft: "2rem",
+                  }}
                   className={classes.listItem}
                   key={blog.id}
                   component={RouterLink}
                   to={`/blog/${blog.id}`}
                   state={blog}
                 >
-                  <ListItemIcon>
+                  <Icon
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                    }}
+                    className={classes.icon}
+                  >
                     <ArticleIcon fontSize="small" />
-                  </ListItemIcon>
+                  </Icon>
                   <Typography>
                     {blog.title} by {blog.author}
                   </Typography>
-                </ListItemButton>
+                </Button>
               ))}
-          </List>
+          </Box>
         </Paper>
       )}
     </Box>

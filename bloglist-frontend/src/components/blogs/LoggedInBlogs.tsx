@@ -4,15 +4,7 @@ import { BlogT } from "../../types/blog.js";
 import { useRef } from "react";
 import BlogsForm from "../blogs/BlogsForm.js";
 import Togglable, { VisibilityHandle } from "../Togglable.js";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Icon, List, Paper, Typography } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
 import blogList from "../../theme/BlogList.js";
 
@@ -23,11 +15,10 @@ const LoggedInBlogs = () => {
   const blogFormRef = useRef<VisibilityHandle>();
   const { classes } = blogList();
 
-  // need to fix liking of the blogs
-
   return (
-    <Box component="section">
-      <List
+    <>
+      <Box
+        component="section"
         sx={{
           marginTop: "2rem",
           width: "100%",
@@ -49,35 +40,46 @@ const LoggedInBlogs = () => {
             }}
           >
             <Typography className={classes.h2} variant="h5" component="h2">
-              {user.username}s blogs
+              {user.username} marks
             </Typography>
-            <List>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+              component="nav"
+            >
               {[...blogs]
                 .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
                 .filter((blog: BlogT) => blog.user.username === user.username)
                 .map((blog: BlogT) => (
-                  <ListItem key={blog.id}>
-                    <ListItemButton
-                      component={RouterLink}
-                      to={`/blog/${blog.id}`}
-                      state={blog}
+                  <Button
+                    aria-label="button to access blogs"
+                    sx={{
+                      marginLeft: "2rem",
+                    }}
+                    key={blog.id}
+                    component={RouterLink}
+                    to={`/blog/${blog.id}`}
+                    state={blog}
+                  >
+                    <Icon
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                      className={classes.icon}
                     >
-                      <ListItemIcon
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                        className={classes.icon}
-                      >
-                        <ArticleIcon fontSize="small" />
-                      </ListItemIcon>
-                      <Typography className={classes.listItem}>
-                        {blog.title} by {blog.author}
-                      </Typography>
-                    </ListItemButton>
-                  </ListItem>
+                      <ArticleIcon fontSize="small" />
+                    </Icon>
+                    <Typography className={classes.listItem}>
+                      {blog.title} by {blog.author}
+                    </Typography>
+                  </Button>
                 ))}
-            </List>
+            </Box>
           </Paper>
         )}
         <Paper
@@ -91,39 +93,50 @@ const LoggedInBlogs = () => {
           <Typography className={classes.h2} variant="h5" component="h2">
             Other blogs
           </Typography>
-          <List>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+            component="nav"
+          >
             {[...blogs]
               .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
               .filter((blog: BlogT) => blog.user.username !== user.username)
               .map((blog: BlogT) => (
-                <ListItem key={blog.id}>
-                  <ListItemButton
-                    component={RouterLink}
-                    to={`/blog/${blog.id}`}
-                    state={blog}
+                <Button
+                  aria-label="button to access blogs"
+                  sx={{
+                    marginLeft: "2rem",
+                  }}
+                  key={blog.id}
+                  component={RouterLink}
+                  to={`/blog/${blog.id}`}
+                  state={blog}
+                >
+                  <Icon
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                    }}
+                    className={classes.icon}
                   >
-                    <ListItemIcon
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                      className={classes.icon}
-                    >
-                      <ArticleIcon fontSize="small" />
-                    </ListItemIcon>
-                    <Typography className={classes.listItem}>
-                      {blog.title} by {blog.author}
-                    </Typography>
-                  </ListItemButton>
-                </ListItem>
+                    <ArticleIcon fontSize="small" />
+                  </Icon>
+                  <Typography className={classes.listItem}>
+                    {blog.title} by {blog.author}
+                  </Typography>
+                </Button>
               ))}
-          </List>
+          </Box>
         </Paper>
-      </List>
+      </Box>
       <Togglable buttonLabel="New blog" ref={blogFormRef}>
         <BlogsForm blogFormRef={blogFormRef} />
       </Togglable>
-    </Box>
+    </>
   );
 };
 

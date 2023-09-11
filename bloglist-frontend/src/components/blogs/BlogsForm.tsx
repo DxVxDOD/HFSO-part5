@@ -98,6 +98,7 @@ const BlogsForm = ({
           />
         </Stack>
         <Button
+          aria-label="submit button"
           sx={{
             width: "fit-content",
           }}

@@ -21,7 +21,9 @@ import "@fontsource/roboto/700.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useMediaQuery } from "@mui/material";
+import "./index.css";
 import NotLoggedIn from "./components/login/NotLoggedIn.tsx";
+import Footer from "./components/Footer.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -80,6 +82,7 @@ const App = () => {
             <Route path="/blog/:id" element={<Blog />} />
           </Routes>
         </main>
+        <Footer />
       </>
     </ThemeProvider>
   );

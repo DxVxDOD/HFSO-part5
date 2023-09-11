@@ -1,14 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import { BlogT } from "../types/blog";
-import {
-  Box,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Icon, Paper, Typography } from "@mui/material";
 import ArticleIcon from "@mui/icons-material/Article";
 import blogList from "../theme/BlogList";
 
@@ -59,31 +52,29 @@ const Home = () => {
                 My blogs:
               </Typography>
             </Box>
-            <List>
-              {[...blogs]
-                .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
-                .filter((blog: BlogT) => blog.user.username === user.username)
-                .map((blog: BlogT) => (
-                  <ListItemButton
-                    key={blog.id}
-                    to={`/blog/${blog.id}`}
-                    component={RouterLink}
-                    state={blog}
+            {[...blogs]
+              .sort((a: BlogT, b: BlogT) => b.likes! - a.likes!)
+              .filter((blog: BlogT) => blog.user.username === user.username)
+              .map((blog: BlogT) => (
+                <Button
+                  key={blog.id}
+                  to={`/blog/${blog.id}`}
+                  component={RouterLink}
+                  state={blog}
+                >
+                  <Icon
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                   >
-                    <ListItemIcon
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ArticleIcon fontSize="small" />
-                    </ListItemIcon>
-                    <Typography className={classes.otherTxt}>
-                      {blog.title} by {blog.author}
-                    </Typography>
-                  </ListItemButton>
-                ))}
-            </List>
+                    <ArticleIcon fontSize="small" />
+                  </Icon>
+                  <Typography className={classes.otherTxt}>
+                    {blog.title} by {blog.author}
+                  </Typography>
+                </Button>
+              ))}
           </>
         )}
       </Paper>

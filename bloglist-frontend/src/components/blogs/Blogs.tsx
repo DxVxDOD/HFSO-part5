@@ -31,9 +31,6 @@ const Blog = () => {
   const blogs = useAppSelector((state) => state.blog);
   const { classes } = useBlog();
   const blog = blogs.filter((blog) => blog.id === state.id)[0];
-  console.log("blog", blog);
-  console.log("blogsArray", blogs);
-  console.log("state", state);
 
   useEffect(() => {
     dispatch(initializeBlogs());

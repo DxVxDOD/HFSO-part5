@@ -82,13 +82,12 @@ const Menu = () => {
         variant="h3"
         component="h1"
       >
-        Blogs app
-        <NewspaperIcon fontSize="small" />
+        Marks
+        <NewspaperIcon fontSize="inherit" />
       </Typography>
       {user === null ? (
         <Box
           className={classes.bttnStack}
-          component="div"
           sx={{
             width: "33.33%",
             display: "flex",
